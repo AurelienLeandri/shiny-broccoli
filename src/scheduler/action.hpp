@@ -10,18 +10,8 @@
 namespace broccoli {
 
   class Action {
-    using action_p = std::shared_ptr<Action>;
-
     public:
-      Action(action_p child_action, void (*result_callback)(void *, ActionResult));
-
-    public:
-      void execute();
-
-    public:
-      action_p child_action;
-      void (*result_callback)(void *, ActionResult);
-      // FIXME: Add threads to manage actions ?
+      virtual void execute() = 0;
   };
 
 }

@@ -5,7 +5,7 @@
 #pragma once
 
 #include <scheduler/data-manager.hpp>
-#include <scheduler/environment-data.hpp>
+#include <scheduler/data-update.hpp>
 
 namespace broccoli {
 
@@ -16,14 +16,14 @@ namespace broccoli {
 
     public:
       template <typename T>
-      EnvironmentData<T> fetchData(T &data);
+      void modify(T &data, T &(*operation)(T &));
 
       DataManager &data_manager;
   };
 
   template<typename T>
-  EnvironmentData<T> Environment::fetchData(T &data) {
-    return EnvironmentData<T>(*data, this->data_manager);
+  void Environment::modify(T &data, T &(*operation)(T &)) {
+    data_manager.addAction(new DataUpdate<T>(data, operation));
   }
 
 }

@@ -5,9 +5,9 @@
 #pragma once
 
 
-#include <queue>
 #include <agent/agent.hpp>
 #include <agent/agent.hpp>
+#include <utils/ctpl_stl.h>
 #include "action.hpp"
 
 namespace broccoli {
@@ -15,12 +15,16 @@ namespace broccoli {
   class DataManager : public Agent {
     public:
       DataManager();
+      ~DataManager();
 
     public:
       void step() override;
+      void addAction(Action *action);
 
     private:
-      std::queue<Action> pending_actions;
+      ctpl::thread_pool _threads;
+      std::vector<Action *> pending_actions;
+      std::mutex _mutex;
   };
 
 }
