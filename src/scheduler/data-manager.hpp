@@ -8,7 +8,9 @@
 #include <agent/agent.hpp>
 #include <agent/agent.hpp>
 #include <utils/ctpl_stl.h>
+#include <map>
 #include "action.hpp"
+#include <cstdint>
 
 namespace broccoli {
 
@@ -20,11 +22,12 @@ namespace broccoli {
     public:
       void step() override;
       void addAction(Action *action);
+      std::mutex &getMutex(uintptr_t data_address);
 
     private:
       ctpl::thread_pool _threads;
       std::vector<Action *> pending_actions;
-      std::mutex _mutex;
+      std::map<uintptr_t, std::mutex> _mutex_cache; // TODO: Remove old mutexes to optimize space
   };
 
 }

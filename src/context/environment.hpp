@@ -23,7 +23,7 @@ namespace broccoli {
 
   template<typename T>
   void Environment::modify(T &data, T &(*operation)(T &)) {
-    data_manager.addAction(new DataUpdate<T>(data, operation));
+    data_manager.addAction(new DataUpdate<T>(data, operation, data_manager));
   }
 
 }

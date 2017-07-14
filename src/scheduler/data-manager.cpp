@@ -3,7 +3,6 @@
 //
 
 #include "data-manager.hpp"
-#include <thread>
 
 namespace broccoli {
 
@@ -12,14 +11,11 @@ namespace broccoli {
   }
 
   void DataManager::step() {
-    /*
     std::vector<std::future<void>> results(pending_actions.size());
-    for (unsigned int j = 0; j < pending_actions.size(); ++j) {
-      results[j] = _threads.push(pending_actions[j]->execute());
-    }
-    for (unsigned int j = 0; j < pending_actions.size(); ++j)
-      results[j].get();
-     */
+    for (unsigned int i = 0; i < pending_actions.size(); ++i)
+      results[i] = _threads.push([this, i](int) { this->pending_actions[i]->execute(); });
+    for (unsigned int i = 0; i < pending_actions.size(); ++i)
+      results[i].get();
   }
 
   void DataManager::addAction(Action *action) {
@@ -29,6 +25,10 @@ namespace broccoli {
   DataManager::~DataManager() {
     for (auto p : pending_actions)
       delete p;
+  }
+
+  std::mutex &DataManager::getMutex(uintptr_t data_address) {
+    return _mutex_cache.at(data_address);
   }
 
 }
