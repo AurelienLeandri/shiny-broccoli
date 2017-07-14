@@ -2,15 +2,13 @@
 // Created by leo on 7/14/17.
 //
 
-#include "scheduler.hpp"
+#include "data-manager.hpp"
 
 namespace broccoli {
 
-  Scheduler::Scheduler() {
+  DataManager::DataManager() {}
 
-  }
-
-  void Scheduler::step() {
+  void DataManager::step() {
     // FIXME: Use threads to manage action and replace following code
     while (pending_actions.size()) {
       auto action = pending_actions.back();
@@ -19,11 +17,11 @@ namespace broccoli {
     }
   }
 
-  void Scheduler::start() {
+  void DataManager::start() {
     // FIXME: Add threads and initialize them ?
   }
 
-  void Scheduler::addPending(Action &action) {
+  void DataManager::addPending(Action &action) {
     pending_actions.push(action);
   }
 }

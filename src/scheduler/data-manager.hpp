@@ -7,13 +7,14 @@
 
 #include <queue>
 #include <agent/agent.hpp>
+#include <agent/agent.hpp>
 #include "action.hpp"
 
 namespace broccoli {
 
-  class Scheduler : public Agent {
+  class DataManager : public Agent {
     public:
-      Scheduler();
+      DataManager();
 
     public:
       void start();
