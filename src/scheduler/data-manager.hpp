@@ -17,9 +17,7 @@ namespace broccoli {
       DataManager();
 
     public:
-      void start();
       void step() override;
-      void addPending(Action &action);
 
     private:
       std::queue<Action> pending_actions;

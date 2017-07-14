@@ -17,11 +17,4 @@ namespace broccoli {
     }
   }
 
-  void DataManager::start() {
-    // FIXME: Add threads and initialize them ?
-  }
-
-  void DataManager::addPending(Action &action) {
-    pending_actions.push(action);
-  }
 }
