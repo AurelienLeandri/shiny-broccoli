@@ -1,7 +1,8 @@
 #include <iostream>
+#include <context/environment>
 
 int main() {
-  std::cout << "Hello World!" << std::endl;
+  srand (time(NULL));
   // FIXME: General testing, unitary tests for functions etc
   return 0;
 }
