@@ -22,6 +22,7 @@ namespace broccoli {
 
     private:
       DataManager *_data_manager;
+      bool threaded;
   };
 
   template<typename T>

@@ -6,13 +6,15 @@
 
 #include <scheduler/data-manager.hpp>
 #include <scheduler/scheduler.hpp>
+#include <scheduler/threading-policy.hpp>
 #include "environment.hpp"
 
 namespace broccoli {
 
   class Context {
     public:
-      Context() : _scheduler(_agents) {}
+      Context() : _scheduler(_agents, _data_manager) {}
+      Context(ThreadingPolicy threading_policy);
       virtual ~Context();
 
     public:
