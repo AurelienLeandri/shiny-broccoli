@@ -12,7 +12,7 @@ namespace broccoli {
   class Action {
     public:
       virtual void execute() = 0;
-      virtual ~Action() = 0;
+      virtual ~Action() {};
   };
 
 }
