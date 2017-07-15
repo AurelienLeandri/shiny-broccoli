@@ -21,7 +21,7 @@ namespace broccoli {
 
     public:
       void step() override;
-      void addAction(Action *action);
+      void add_action(Action *action);
       std::mutex &getMutex(uintptr_t data_address);
 
     private:

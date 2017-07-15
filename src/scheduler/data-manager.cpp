@@ -18,7 +18,7 @@ namespace broccoli {
       results[i].get();
   }
 
-  void DataManager::addAction(Action *action) {
+  void DataManager::add_action(Action *action) {
     pending_actions.push_back(action);
   }
 
