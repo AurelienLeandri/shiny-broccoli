@@ -11,19 +11,22 @@ namespace broccoli {
 
   class Environment {
     public:
-      Environment(DataManager &data_manager) : data_manager(data_manager) {}
+      Environment() {}
       virtual ~Environment() = 0;
 
     public:
       template <typename T>
       void modify(T &data, T &(*operation)(T &));
+      void set_data_manager(DataManager *data_manager) { _data_manager = data_manager; }
 
-      DataManager &data_manager;
+
+    private:
+      DataManager *_data_manager;
   };
 
   template<typename T>
   void Environment::modify(T &data, T &(*operation)(T &)) {
-    data_manager.addAction(new DataUpdate<T>(data, operation, data_manager));
+    _data_manager->add_action(new DataUpdate<T>(data, operation, *_data_manager));
   }
 
 }
