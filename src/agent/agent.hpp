@@ -13,7 +13,7 @@ namespace broccoli {
     public:
       Agent() : _ticks_between_updates(1) {}
       Agent(unsigned int ticks_between_updates) : _ticks_between_updates(ticks_between_updates) {}
-      virtual ~Agent() = 0;
+      virtual ~Agent() {};
 
     public:
       virtual void step() = 0;

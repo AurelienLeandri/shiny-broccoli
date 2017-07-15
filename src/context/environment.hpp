@@ -12,7 +12,7 @@ namespace broccoli {
   class Environment {
     public:
       Environment() {}
-      virtual ~Environment() = 0;
+      virtual ~Environment() {};
 
     public:
       template <typename T>
