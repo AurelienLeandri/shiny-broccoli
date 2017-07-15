@@ -16,6 +16,7 @@ namespace broccoli {
       DataUpdate<T>(T &data, T (*operation)(T &), DataManager &data_manager)
           : _data(data), _operation(operation), _data_manager(data_manager)
       {}
+      ~DataUpdate() {}
 
 
     public:
