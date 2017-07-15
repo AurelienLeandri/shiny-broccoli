@@ -14,20 +14,22 @@
 
 namespace broccoli {
 
-  class DataManager : public Agent {
+  class DataManager {
     public:
-      DataManager();
+      DataManager() : _threads(new ctpl::thread_pool(std::thread::hardware_concurrency())), _use_threads(true) {}
+      DataManager(bool use_threads) : _use_threads(use_threads) {}
       ~DataManager();
 
     public:
-      void step() override;
+      void poll_requests();
       void add_action(Action *action);
       std::mutex &getMutex(uintptr_t data_address);
 
     private:
-      ctpl::thread_pool _threads;
+      ctpl::thread_pool *_threads;
       std::vector<Action *> pending_actions;
       std::map<uintptr_t, std::mutex> _mutex_cache; // TODO: Remove old mutexes to optimize space
+      bool _use_threads;
   };
 
 }

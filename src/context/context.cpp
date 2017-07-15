@@ -24,4 +24,10 @@ namespace broccoli {
     _scheduler.start();
   }
 
+  Context::Context(ThreadingPolicy threading_policy)
+  :
+      _data_manager((threading_policy == ThreadingPolicy::ALL) || (threading_policy = ThreadingPolicy::DATA_ONLY)),
+      _scheduler(_agents, _data_manager,
+                 (threading_policy == ThreadingPolicy::ALL) || (threading_policy = ThreadingPolicy::AGENTS_ONLY))
+  {}
 }
