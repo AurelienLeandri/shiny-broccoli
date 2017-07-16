@@ -1,8 +1,9 @@
 #include "agent.hpp"
 
-
+/*
 void DummyWazabi::step()
 {
+    env.setValue(id);
     if (!env.obstacle(Direction::RIGHT), *this)
         ++x;
     else if (!env.obstacle(Direction::DOWN), *this)
@@ -11,4 +12,4 @@ void DummyWazabi::step()
         --x;
     else
         --y;
-}
+}*/

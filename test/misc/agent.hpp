@@ -1,14 +1,15 @@
-#include <agent/agent.hpp>
+#pragma once
 
-class DummyWazabi(broccoli.Agent)
+#include <agent/agent.hpp>
+#include "environment.hpp"
+
+class DummyWazabi : public broccoli::Agent
 {
     private:
-        size_t x;
-        size_t y;
-        MyEnvironment &env;
+        MyEnvironment env;
+        int id;
 
     public:
-        DummyWazabi(MyEnvironment env, size_t x, size_t y) {this->x = x; this->y = y; this->env = env;};
-        void step();
-    
+        DummyWazabi(MyEnvironment env, int id) : env(env), id(id) {};
+        void step() { env.setValue(); };
 };
