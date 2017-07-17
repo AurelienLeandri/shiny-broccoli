@@ -16,7 +16,9 @@ namespace broccoli {
 
     public:
       template <typename T>
-      void modify(T &data, T (*operation)(T &));
+      void modify(T &data, void (*operation)(T &));
+      template <typename T1, typename T2>
+      void modify(T1 &data1, T2 &data2, void (*operation)(T1 &, T2&));
       void set_data_manager(DataManager *data_manager) { _data_manager = data_manager; }
 
 
@@ -26,8 +28,13 @@ namespace broccoli {
   };
 
   template<typename T>
-  void Environment::modify(T &data, T (*operation)(T &)) {
+  void Environment::modify(T &data, void (*operation)(T &)) {
     _data_manager->add_action(new DataUpdate<T>(data, operation, *_data_manager));
+  }
+
+  template<typename T1, typename T2>
+  void Environment::modify(T1 &data1, T2 &data2, void (*operation)(T1 &, T2 &)) {
+    _data_manager->add_action(new DataUpdate<T1, T2>(data1, data2, operation, *_data_manager));
   }
 
 }
