@@ -48,7 +48,9 @@ namespace game {
       e.draw(target_window);
     for (auto &e : _grid_elements) {
       for (broccoli::GridElement *f : e) {
-        ((Drawable *)f)->draw(target_window);
+        Drawable *drawable = dynamic_cast<Drawable *>(f);
+        if (drawable)
+          drawable->draw(target_window);
       }
     }
   }
@@ -58,6 +60,8 @@ namespace game {
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
+      std::cout << _grid_elements.size() << std::endl;
+      std::cout << "BOUBOU" << y * _cols + x << std::endl;
       _grid_elements[y * _cols + x].push_back(new Good(broccoli::GridPoint(x, y), rm.textures.at("agent_good")));
     }
     for (int i = 0; i < NB_EVIL; i++) {
