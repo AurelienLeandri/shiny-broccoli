@@ -30,12 +30,18 @@ namespace game {
         x++;
       }
       y++;
+      x = 0;
     }
     return grid;
   }
 
   const game::GridTile &game::GameGrid::getTile(int x, int y) {
     return _grid_tiles[y * _cols + x];
+  }
+
+  void GameGrid::draw(sf::RenderWindow &target_window) {
+    for (auto &e : _grid_tiles)
+      e.draw(target_window);
   }
 
 }

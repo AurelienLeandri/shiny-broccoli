@@ -2,6 +2,7 @@
 // Created by leo on 7/17/17.
 //
 
+#include <game/constants.hpp>
 #include "grid-tile.hpp"
 
 namespace game {
@@ -10,6 +11,7 @@ namespace game {
       : GridElement(position), _type(type)
   {
     _sprite.setTexture(texture);
+    _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
   }
 
   void GridTile::draw(sf::RenderWindow &target_window) {

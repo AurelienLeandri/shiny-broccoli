@@ -10,11 +10,16 @@
 
 namespace game {
 
-  class GameGrid : public broccoli::Grid {
+  class GameGrid : public broccoli::Grid, public Drawable {
     public:
       GameGrid(unsigned int rows, unsigned int cols);
-      static GameGrid load_from_file(const char *file, ResourcesManager &rm);
+
+    public:
+      virtual void draw(sf::RenderWindow &target_window) override;
       const GridTile &getTile(int x, int y);
+
+    public:
+      static GameGrid load_from_file(const char *file, ResourcesManager &rm);
 
     public:
       std::vector<GridTile> _grid_tiles;
