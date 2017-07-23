@@ -23,8 +23,8 @@ namespace broccoli {
 
     public:
       const std::vector<std::vector<GridElement *>> &get_grid_elements() const { return _grid_elements; }
-      const unsigned int &get_rows() { return _rows; }
-      const unsigned int &get_cols() { return _cols; }
+      const unsigned int &get_rows() const { return _rows; }
+      const unsigned int &get_cols() const { return _cols; }
 
     protected:
       std::vector<std::vector<GridElement *>> _grid_elements;

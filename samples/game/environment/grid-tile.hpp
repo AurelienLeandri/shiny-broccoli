@@ -26,7 +26,7 @@ namespace game {
       virtual void step() override;
 
     public:
-      const TileType &getType() { return _type; }
+      const TileType &get_type() const { return _type; }
 
 
     private:

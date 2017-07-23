@@ -21,7 +21,7 @@ namespace broccoli {
       const GridPoint &get_position() { return _position; }
       const GridPoint &set_position() { return _position; }
 
-    private:
+    public:
       GridPoint _position;
 
   };

@@ -60,14 +60,18 @@ namespace game {
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
-      std::cout << _grid_elements.size() << std::endl;
-      std::cout << "BOUBOU" << y * _cols + x << std::endl;
-      _grid_elements[y * _cols + x].push_back(new Good(broccoli::GridPoint(x, y), rm.textures.at("agent_good")));
+      if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
+        sf::Texture &t = rm.textures.at("agent_good");
+        Good *g = new Good(broccoli::GridPoint(x, y), t, *this);
+        _grid_elements[y * _cols + x].push_back(g);
+      }
     }
     for (int i = 0; i < NB_EVIL; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
-      _grid_elements[y * _cols + x].push_back(new Evil(broccoli::GridPoint(x, y), rm.textures.at("agent_evil")));
+      if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST)
+        _grid_elements[y * _cols + x].push_back(
+            new Evil(broccoli::GridPoint(x, y), rm.textures.at("agent_evil"), *this));
     }
   }
 
