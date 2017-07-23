@@ -48,7 +48,7 @@ def print_map(map):
     s = ""
     for line in map:
         for elt in line:
-            s += str(elt)
+            s += str(elt) + " "
         s += "\n"
     print(s)
 
@@ -73,6 +73,7 @@ def main():
     for _ in range(nb_mountains_points):
         pos = random.randint(0, size)
         paint_round(2, map, cols, rows, pos, mountains_point_max_size)
+    print(str(cols) + " " + str(rows))
     print_map(map)
 
 

@@ -18,15 +18,23 @@ namespace game {
 
   class GridTile : public broccoli::GridElement, public Drawable {
     public:
-      GridTile(const broccoli::GridPoint &position);
+      GridTile(const broccoli::GridPoint &position, TileType type, sf::Texture &texture);
       virtual ~GridTile();
 
     public:
       void draw(sf::RenderWindow &target_window);
       virtual void step() override;
 
+    public:
+      const TileType &getType() { return _type; }
+
+
     private:
       sf::Sprite _sprite;
+      TileType _type;
+
+    public:
+      static std::string getTextureNameForType(TileType type);
 
   };
 

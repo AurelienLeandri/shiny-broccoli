@@ -26,7 +26,7 @@ namespace broccoli {
       const unsigned int &get_rows() { return _rows; }
       const unsigned int &get_cols() { return _cols; }
 
-    private:
+    protected:
       std::vector<std::vector<GridElement *>> _grid_elements;
       unsigned int _rows;
       unsigned int _cols;

@@ -1,0 +1,5 @@
+tile_forest tile_forest.png
+tile_grass tile_grass.png
+tile_water tile_water.png
+tile_mountain tile_mountain.png
+default default.png

@@ -1,7 +1,9 @@
 #include <iostream>
+#include <game/environment/game-grid.hpp>
 
 int main() {
-  std::cout << "Hello World!" << std::endl;
-  // FIXME: Starting point of the sample game
+  game::ResourcesManager rm;
+  rm.load_textures("textures/");
+  game::GameGrid gg = game::GameGrid::load_from_file("base.map", rm);
   return 0;
 }
