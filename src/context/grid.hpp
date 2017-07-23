@@ -12,7 +12,7 @@ namespace broccoli {
 
   class Grid : public Environment {
     public:
-      Grid(unsigned int rows, unsigned int cols) : _rows(rows), _cols(cols) {}
+      Grid(unsigned int rows, unsigned int cols) : _rows(rows), _cols(cols), _grid_elements(rows * cols) {}
       virtual std::vector<GridElement *> &getElementsAt(GridPoint position);
       virtual void addElementAt(GridElement *element, GridPoint position);
       virtual GridElement *removeElement(GridElement *element, GridPoint position);
