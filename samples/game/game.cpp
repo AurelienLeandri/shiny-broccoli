@@ -10,6 +10,7 @@ namespace game {
       : _rm(rm), _grid(game::GameGrid::load_from_file("base.map", _rm))
   {
     _render_window = render_window;
+    _grid.load_agents(_rm);
   }
 
   Game::~Game() {

@@ -9,7 +9,13 @@
 namespace game {
 
   class Drawable {
-      virtual void draw(sf::RenderWindow &target_window) = 0;
+    public:
+      virtual void draw(sf::RenderWindow &target_window) {
+        target_window.draw(_sprite);
+      };
+
+    protected:
+      sf::Sprite _sprite;
   };
 
 }

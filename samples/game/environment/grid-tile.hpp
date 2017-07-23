@@ -30,7 +30,6 @@ namespace game {
 
 
     private:
-      sf::Sprite _sprite;
       TileType _type;
 
     public:

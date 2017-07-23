@@ -16,7 +16,8 @@ namespace game {
 
     public:
       virtual void draw(sf::RenderWindow &target_window) override;
-      const GridTile &getTile(int x, int y);
+      const GridTile &get_tile(int x, int y);
+      void load_agents(ResourcesManager &rm);
 
     public:
       static GameGrid load_from_file(const char *file, ResourcesManager &rm);

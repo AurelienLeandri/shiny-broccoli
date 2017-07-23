@@ -7,8 +7,8 @@
 
 namespace game {
   const int TILE_SIZE = 64;
-  const int NB_FOX = 50;
-  const int NB_CHIKEN = 50;
+  const int NB_EVIL = 50;
+  const int NB_GOOD = 50;
 }
 
 #endif //SHINYBROCCOLI_CONSTANTS_HPP

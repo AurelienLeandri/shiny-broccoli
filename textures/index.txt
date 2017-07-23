@@ -3,3 +3,5 @@ tile_grass tile_grass.png
 tile_water tile_water.png
 tile_mountain tile_mountain.png
 default default.png
+agent_evil agent_evil.png
+agent_good agent_good.png
