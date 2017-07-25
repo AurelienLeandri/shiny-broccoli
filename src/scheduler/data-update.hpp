@@ -21,8 +21,9 @@ namespace broccoli {
 
     public:
       void execute() override;
+      uintptr_t get_data_address() { return (uintptr_t) &_data; };
 
-    public:
+    private:
       T &_data;
       T (*_operation)(T &);
       DataManager &_data_manager;
@@ -30,10 +31,10 @@ namespace broccoli {
 
   template <typename T>
   void DataUpdate<T>::execute() {
-    auto &mutex = _data_manager.getMutex((uintptr_t) &_data);
-    mutex.lock();
+    auto *mutex = _data_manager.get_mutex((uintptr_t) &_data);
+    mutex->lock();
     _operation(_data);
-    mutex.unlock();
+    mutex->unlock();
   }
 
 }
