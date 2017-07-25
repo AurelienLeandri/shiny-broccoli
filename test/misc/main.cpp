@@ -1,23 +1,22 @@
 #include <iostream>
 #include <random>
-#include <vector>
 #include <context/context.hpp>
 #include "environment.hpp"
 #include "agent.hpp"
-#include <cstdio>
+#include <cstring>
 
 int main(int argc, char *argv[]) {
     broccoli::ThreadingPolicy policy = broccoli::ALL;
     if (argc == 2 && !strcmp(argv[1], "DATA_ONLY"))
-      policy = broccoli::DATA_ONLY;
+        policy = broccoli::DATA_ONLY;
     else if (argc == 2 && !strcmp(argv[1], "AGENTS_ONLY"))
-      policy = broccoli::AGENTS_ONLY;
+        policy = broccoli::AGENTS_ONLY;
     if (argc == 2 && !strcmp(argv[1], "NONE"))
-      policy = broccoli::NONE;
-    
+        policy = broccoli::NONE;
+
     srand (time(NULL));
     int nb_agents = 10000;
-    broccoli::Context context;
+    broccoli::Context context(policy);
     MyEnvironment env;
     context.add_environment(&env);
     std::vector<DummyWazabi*> agents;

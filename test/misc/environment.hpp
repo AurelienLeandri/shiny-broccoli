@@ -20,6 +20,6 @@ class MyEnvironment : public broccoli::Environment {
         void setValue()
         {
             this->modify<int>(
-                    value, [] (int &i) { std::cout << i << std::endl; i = i + 1; return i; });
+                    value, [] (int &i) { std::cout << i << std::endl; i = i + 1; });
         };
 };
