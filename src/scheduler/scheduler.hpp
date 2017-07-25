@@ -19,6 +19,7 @@ namespace broccoli {
 
     public:
       void start();
+      void tick();
 
     private:
       std::vector<std::pair<unsigned int, Agent *>> &_agents;
