@@ -20,9 +20,6 @@ class MyEnvironment : public broccoli::Environment {
         void setValue()
         {
             this->modify<int>(
-                    value, [] (int &i) { std::cout << i << std::endl; return i + 1; });
+                    value, [] (int &i) { std::cout << i << std::endl; i = i + 1; return i; });
         };
-
-        //bool obstacle(int direction, const DummyWazabi dummie);
-        //void setPos(DummyWazabi &dummie);
 };

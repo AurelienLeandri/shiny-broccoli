@@ -6,10 +6,10 @@
 class DummyWazabi : public broccoli::Agent
 {
     private:
-        MyEnvironment env;
+        MyEnvironment& env;
         int id;
 
     public:
-        DummyWazabi(MyEnvironment env, int id) : env(env), id(id) {};
+        DummyWazabi(MyEnvironment& env, int id) : env(env), id(id) {};
         void step() { env.setValue(); };
 };
