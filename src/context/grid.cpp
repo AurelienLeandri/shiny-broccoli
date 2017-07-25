@@ -13,7 +13,7 @@ namespace broccoli {
 
   void Grid::addElementAt(GridElement *element, GridPoint position) {
     std::vector<GridElement *> &s = this->_grid_elements[position._y * _rows + position._x];
-    this->modify<std::vector<GridElement *>, GridElement *>(
+    this->modify<std::vector<GridElement *>, GridElement *&>(
         s,
         element,
        [] (std::vector<GridElement *> &st, GridElement *&e) {
@@ -32,7 +32,7 @@ namespace broccoli {
     auto it = std::find(s.begin(), s.end(), element);
     if (it == s.end())
       return nullptr;
-    this->modify<std::vector<GridElement *>, GridElement *>(
+    this->modify<std::vector<GridElement *>, GridElement *&>(
         this->_grid_elements[position._y * _rows + position._x],
         element,
         [] (std::vector<GridElement *> &st, GridElement *&e) {

@@ -13,8 +13,8 @@ namespace broccoli {
   template <typename T1, typename T2 = void>
   class DataUpdate : public Action {
     public:
-      DataUpdate<T1, T2>(T1 &data, T2 &param, void (*operation)(T1 &, T2&), DataManager &data_manager)
-          : _data(data), _param(param), _operation(operation), _data_manager(data_manager)
+      DataUpdate<T1, T2>(T1 &data, T2 param, void (*operation)(T1 &, T2), DataManager &data_manager)
+          : _data(data), _param(std::forward<T2>(param)), _operation(operation), _data_manager(data_manager)
       {}
       ~DataUpdate() {}
 
@@ -24,8 +24,8 @@ namespace broccoli {
 
     public:
       T1 &_data;
-      T2 &_param;
-      void (*_operation)(T1 &, T2&);
+      T2 _param;
+      void (*_operation)(T1 &, T2);
       DataManager &_data_manager;
   };
 
