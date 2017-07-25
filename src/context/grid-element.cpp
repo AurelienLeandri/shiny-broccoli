@@ -11,6 +11,11 @@ namespace broccoli {
       _step_enabled = false;
   }
 
+  GridElement::GridElement(GridPoint position, bool step_enabled)
+  : Agent(1), _position(position) {
+    _step_enabled = true;
+  }
+
   GridElement::~GridElement() {
 
   }

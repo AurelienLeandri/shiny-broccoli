@@ -13,4 +13,4 @@ add_subdirectory(environment)
 add_subdirectory(graphics)
 
 add_executable(sample_game ${SAMPLE_GAME_SOURCES})
-target_link_libraries(sample_game broccoli sfml-graphics sfml-window sfml-system)
+target_link_libraries(sample_game broccoli sfml-graphics sfml-window sfml-system -pthread)

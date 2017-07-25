@@ -12,6 +12,7 @@ namespace broccoli {
   class GridElement : public Agent {
     public:
       GridElement(GridPoint position);
+      GridElement(GridPoint position, bool step_enabled);
       virtual ~GridElement();
 
     public:

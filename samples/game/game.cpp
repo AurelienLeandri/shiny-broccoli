@@ -7,10 +7,11 @@
 namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
-      : _rm(rm), _grid(game::GameGrid::load_from_file("base.map", _rm))
+      : context(broccoli::ThreadingPolicy::NONE), _rm(rm), _grid(game::GameGrid::load_from_file("base.map", _rm))
   {
     _render_window = render_window;
-    _grid.load_agents(_rm);
+    _grid.set_data_manager(&context.get_data_manager());
+    _grid.load_agents(_rm, context);
   }
 
   Game::~Game() {
@@ -21,6 +22,7 @@ namespace game {
   }
 
   void Game::update(float delta) {
+    //context.update();
   }
 
   void Game::start() {

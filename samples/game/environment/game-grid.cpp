@@ -55,23 +55,26 @@ namespace game {
     }
   }
 
-  void GameGrid::load_agents(ResourcesManager &rm) {
+  void GameGrid::load_agents(ResourcesManager &rm, broccoli::Context &context) {
     unsigned int x, y;
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
         sf::Texture &t = rm.textures.at("agent_good");
-        Good *g = new Good(broccoli::GridPoint(x, y), t, *this);
-        _grid_elements[y * _cols + x].push_back(g);
+        _grid_elements[y * _cols + x].push_back(new Good(broccoli::GridPoint(x, y), t, *this));
+        context.add_agent(_grid_elements[y * _cols + x].back());
       }
     }
     for (int i = 0; i < NB_EVIL; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
-      if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST)
-        _grid_elements[y * _cols + x].push_back(
-            new Evil(broccoli::GridPoint(x, y), rm.textures.at("agent_evil"), *this));
+      if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
+        sf::Texture &t = rm.textures.at("agent_good");
+        Evil *e = new Evil(broccoli::GridPoint(x, y), t, *this);
+        _grid_elements[y * _cols + x].push_back(new Evil(broccoli::GridPoint(x, y), t, *this));
+        context.add_agent(_grid_elements[y * _cols + x].back());
+      }
     }
   }
 

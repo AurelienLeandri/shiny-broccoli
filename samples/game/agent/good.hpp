@@ -18,7 +18,7 @@ namespace game {
       virtual ~Good();
 
     private:
-      const GameGrid &_grid;
+      GameGrid &_grid;
 
     public:
       virtual void step() override;

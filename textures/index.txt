@@ -5,3 +5,6 @@ tile_mountain tile_mountain.png
 default default.png
 agent_evil agent_evil.png
 agent_good agent_good.png
+tile_portal_evil tile_portal_evil.png
+tile_portal_good tile_portal_good.png
+tile_ore tile_ore.png

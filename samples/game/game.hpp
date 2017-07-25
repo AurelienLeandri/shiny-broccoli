@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <game/environment/game-grid.hpp>
 #include <game/graphics/updatable.hpp>
+#include <context/context.hpp>
 #include "resources-manager.hpp"
 
 namespace game {
@@ -27,6 +28,7 @@ namespace game {
       sf::RenderWindow *_render_window;
       ResourcesManager &_rm;
       GameGrid _grid;
+      broccoli::Context context;
   };
 
 }

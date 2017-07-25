@@ -8,7 +8,7 @@
 namespace game {
 
   Good::Good(broccoli::GridPoint position, sf::Texture &texture, GameGrid &grid)
-      : GridElement(position), _grid(grid)
+      : GridElement(position, true), _grid(grid)
   {
     _sprite.setTexture(texture);
     _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
@@ -18,6 +18,7 @@ namespace game {
   }
 
   void Good::step() {
+    move_normally();
   }
 
   void Good::update(float delta) {
@@ -35,10 +36,7 @@ namespace game {
                                 + _position._x + offset_x[move]].get_type() == WATER)
       move = (move + 1) % 5;
     broccoli::GridPoint new_pos(_position._x + offset_x[move], _position._y + offset_y[move]);
-    _grid.modify<Good, broccoli::GridPoint>(*this, new_pos, [](Good &elt, broccoli::GridPoint pos) {
-      elt._position._x = pos._x;
-      elt._position._y = pos._y;
-    });
+    _grid.moveElementTo(this, _position, new_pos);
   }
 
 }

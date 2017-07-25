@@ -25,6 +25,27 @@ def paint_round(color, map, cols, rows, pos, max_size):
                 if i != j:
                     q.put([x + i, y + j])
 
+def paint_round_mountains(color, map, cols, rows, pos, max_size):
+    x = pos % cols
+    y = pos // cols
+    offsets = [-1, 0, 1]
+    q = queue.Queue()
+    q.put([x, y])
+    size = random.randint(0, max_size)
+    nb_to_paint = sum([pow(4, i) for i in range(size)])
+    while nb_to_paint > 0:
+        t = q.get()
+        if t[1] < rows and t[0] < cols:
+            if random.randint(0, 4) == 0:
+                map[t[1]][t[0]] = 4
+            else:
+                map[t[1]][t[0]] = color
+        nb_to_paint -= 1
+        for i in offsets:
+            for j in offsets:
+                if i != j:
+                    q.put([x + i, y + j])
+
 
 def print_map_colored(map):
     s = ""
@@ -68,11 +89,24 @@ def main():
     for _ in range(nb_forest_points):
         pos = random.randint(0, size)
         paint_round(1, map, cols, rows, pos, forest_point_max_size)
-    nb_mountains_points = size // 36
+    nb_mountains_points = size // 28
     mountains_point_max_size = 6
     for _ in range(nb_mountains_points):
         pos = random.randint(0, size)
-        paint_round(2, map, cols, rows, pos, mountains_point_max_size)
+        paint_round_mountains(2, map, cols, rows, pos, mountains_point_max_size)
+    placed = False
+    while True:
+        i = random.randint(0, rows)
+        j = random.randint(0, cols)
+        if map[i][j] == 0:
+            map[i][j] = 5
+            break
+    while True:
+        i = random.randint(0, rows)
+        j = random.randint(0, cols)
+        if map[i][j] == 0:
+            map[i][j] = 6
+            break
     print(str(cols) + " " + str(rows))
     print_map(map)
 

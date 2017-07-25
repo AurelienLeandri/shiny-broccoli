@@ -6,6 +6,7 @@
 
 #include <context/grid.hpp>
 #include <game/resources-manager.hpp>
+#include <context/context.hpp>
 #include "grid-tile.hpp"
 
 namespace game {
@@ -17,7 +18,7 @@ namespace game {
     public:
       virtual void draw(sf::RenderWindow &target_window) override;
       const GridTile &get_tile(int x, int y);
-      void load_agents(ResourcesManager &rm);
+      void load_agents(ResourcesManager &rm, broccoli::Context &context);
 
     public:
       static GameGrid load_from_file(const char *file, ResourcesManager &rm);

@@ -22,7 +22,7 @@ namespace game {
       void move_normally();
 
     private:
-      const GameGrid &_grid;
+      GameGrid &_grid;
 
     public:
       virtual void step() override;
