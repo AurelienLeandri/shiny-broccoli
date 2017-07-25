@@ -21,6 +21,7 @@ namespace broccoli {
       void add_agent(Agent *agent);
       void add_environment(Environment *environment);
       void start();
+      const DataManager &get_data_manager();
 
     private:
       DataManager _data_manager;

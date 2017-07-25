@@ -30,4 +30,8 @@ namespace broccoli {
       _scheduler(_agents, _data_manager,
                  (threading_policy == ThreadingPolicy::ALL) || (threading_policy = ThreadingPolicy::AGENTS_ONLY))
   {}
+
+  const DataManager &Context::get_data_manager() {
+    return _data_manager;
+  }
 }
