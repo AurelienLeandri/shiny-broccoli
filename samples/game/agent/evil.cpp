@@ -36,9 +36,9 @@ namespace game {
                                 + _position._x + offset_x[move]].get_type() == WATER)
       move = (move + 1) % 5;
     broccoli::GridPoint new_pos(_position._x + offset_x[move], _position._y + offset_y[move]);
-    _grid.modify(*this, [=](Evil &elt) {
-      elt._position._x = new_pos._x;
-      elt._position._y = new_pos._y;
+    _grid.modify<Evil, broccoli::GridPoint>(*this, new_pos, [](Evil &elt, broccoli::GridPoint pos) {
+      elt._position._x = pos._x;
+      elt._position._y = pos._y;
     });
   }
 
