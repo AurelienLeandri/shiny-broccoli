@@ -36,6 +36,5 @@ namespace broccoli {
   void Environment::modify(T1 &data1, T2 data2, void (*operation)(T1 &, T2)) const {
     _data_manager->add_action(new DataUpdate<T1, T2>(data1, data2, operation, *_data_manager));
   }
-
 }
 

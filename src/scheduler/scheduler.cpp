@@ -4,6 +4,7 @@
 
 #include <future>
 #include "scheduler.hpp"
+#include <iostream>
 
 namespace broccoli {
 
@@ -12,19 +13,21 @@ namespace broccoli {
   void Scheduler::start() {
     if (_use_threads) {
       while (true) {
+        std::cout << " -------- ITERATION --------" << std::endl;
         std::vector<std::future<void>> results;
         for (unsigned int i = 0; i < _agents.size(); ++i) {
           if (_agents[i].second) {
             _agents[i].first--;
             if (!_agents[i].first) {
-              results.push_back(_threads.push([this, i](int) { _agents[i].second->step(); }));
+              results.push_back(_threads->push([this, i](int) { _agents[i].second->step(); }));
               _agents[i].first = _agents[i].second->get_ticks_between_updates();
             }
           }
         }
-        results.push_back(_threads.push([this](int) { _data_manager.poll_requests(); }));
         for (unsigned int i = 0; i < results.size(); ++i)
-          results[i].get();
+          if (results[i].valid())
+            results[i].get();
+        _data_manager.poll_requests();
       }
     }
     else {
@@ -50,12 +53,12 @@ namespace broccoli {
         if (_agents[i].second) {
           _agents[i].first--;
           if (!_agents[i].first) {
-            results.push_back(_threads.push([this, i](int) { _agents[i].second->step(); }));
+            results.push_back(_threads->push([this, i](int) { _agents[i].second->step(); }));
             _agents[i].first = _agents[i].second->get_ticks_between_updates();
           }
         }
       }
-      results.push_back(_threads.push([this](int) { _data_manager.poll_requests(); }));
+      results.push_back(_threads->push([this](int) { _data_manager.poll_requests(); }));
       for (unsigned int i = 0; i < results.size(); ++i)
         results[i].get();
     }
