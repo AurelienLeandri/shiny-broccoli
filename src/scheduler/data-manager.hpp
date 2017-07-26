@@ -8,6 +8,7 @@
 #include <agent/agent.hpp>
 #include <agent/agent.hpp>
 #include <utils/ctpl_stl.h>
+#include <utils/thread_pool.hh>
 #include <map>
 #include "action.hpp"
 #include <cstdint>
@@ -19,12 +20,12 @@ class DataUpdate;
 
   class DataManager {
     public:
-      DataManager() : _threads(new ctpl::thread_pool(std::thread::hardware_concurrency())), _use_threads(true) {}
+      DataManager() : _threads(new broccoli::thread_pool(std::thread::hardware_concurrency())), _use_threads(true) {}
       DataManager(bool use_threads) : _use_threads(use_threads)
 	  {
 	    if (_use_threads)
 		{
-		  _threads = new ctpl::thread_pool(std::thread::hardware_concurrency());
+		  _threads = new broccoli::thread_pool(std::thread::hardware_concurrency());
 		}
 	  }
       ~DataManager();
@@ -48,7 +49,7 @@ class DataUpdate;
       std::mutex *get_mutex(uintptr_t data_address);
 
     private:
-      ctpl::thread_pool *_threads;
+      broccoli::thread_pool *_threads;
       std::vector<Action *> pending_actions;
       std::map<uintptr_t, std::mutex*> _mutex_cache; // TODO: Remove old mutexes to optimize space
       bool _use_threads;

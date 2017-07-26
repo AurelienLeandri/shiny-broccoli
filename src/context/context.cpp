@@ -8,7 +8,7 @@ namespace broccoli {
 
   Context::~Context() {
     for (auto e : _agents) delete e.second;
-    for (auto e : _environments) delete e;
+    for (auto* e : _environments) delete e;
   }
 
   void Context::add_agent(Agent *agent) {
