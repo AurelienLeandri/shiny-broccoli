@@ -17,9 +17,14 @@ class MyEnvironment : public broccoli::Environment {
 
     public:
         MyEnvironment() : value(0) {};
+
+        int getValue()
+        {
+        return value;
+        }
         void setValue()
         {
             this->modify<int>(
-                    value, [] (int &i) { std::cout << i << std::endl; i = i + 1; });
+                    value, [] (int &i) { i = i + 1; });
         };
 };

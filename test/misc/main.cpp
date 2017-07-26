@@ -17,14 +17,17 @@ int main(int argc, char *argv[]) {
     srand (time(NULL));
     int nb_agents = 10000;
     broccoli::Context context(policy);
-    MyEnvironment env;
-    context.add_environment(&env);
+    MyEnvironment* env = new MyEnvironment();
+    context.add_environment(env);
     std::vector<DummyWazabi*> agents;
     for (int i = 0; i < nb_agents; ++i)
     {
-        agents.push_back(new DummyWazabi(env, rand() % 100000));
+        agents.push_back(new DummyWazabi(*env, rand() % 100000));
         context.add_agent(agents[agents.size() - 1]);
     }
-    context.start();
+    for (int i = 0; i < 100; ++i)
+      context.update();
+
+    std::cout << "value : " << env->getValue() << std::endl;
     return 0;
 }
