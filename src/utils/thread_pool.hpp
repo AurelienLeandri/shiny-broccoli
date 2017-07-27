@@ -35,7 +35,7 @@ namespace broccoli
       std::condition_variable condition_;
       std::atomic<bool> running_;
       std::atomic<bool> stopped_;
-      std::atomic<unsigned> available_;  // how many threads are waiting
+      std::atomic<unsigned> tasks_running_;  // how many tasks are running
 
     /// @brief Constructor.
     // deleted
@@ -51,7 +51,7 @@ namespace broccoli
 
         // get the number of running threads in the pool
         int size() { return static_cast<int>(this->threads_.size()); }
-
+        bool waiting() { return tasks_running_ == 0; }
         std::thread & get_thread(int i) { return this->threads_[i]; }
 
         // empty the queue
@@ -77,6 +77,7 @@ namespace broccoli
 
    std::unique_lock<std::mutex> lock(mutex_);
    tasks_.push(_f);
+   tasks_running_++;
    condition_.notify_one();
    return pck->get_future();
   }
@@ -94,6 +95,7 @@ namespace broccoli
 
      std::unique_lock<std::mutex> lock(mutex_);
      tasks_.push(_f);
+     tasks_running_++;
      condition_.notify_one();
      return pck->get_future();
     }

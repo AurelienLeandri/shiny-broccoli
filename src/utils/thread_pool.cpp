@@ -42,12 +42,14 @@ namespace broccoli
 
     void  thread_pool::stop()
     {
-    this->stopped_ = true;
+      this->stopped_ = true;
+      condition_.notify_all();
     }
 
     void  thread_pool::resume()
     {
       this->stopped_ = false;
+      condition_.notify_all();
     }
 
 
@@ -79,10 +81,6 @@ namespace broccoli
 
            lock.unlock();
 
-           if (!stopped_) // If we are stopped we won't even run the task
-           {
-
-
            // Run the task.
            try
            {
@@ -91,7 +89,9 @@ namespace broccoli
            // Suppress all exceptions.
            catch ( const std::exception& ) {}
            }
-         }
+
+           tasks_running_--;
+
 
          // Task has finished, so increment count of available threads.
 
