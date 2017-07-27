@@ -4,6 +4,7 @@
 #include "environment.hpp"
 #include "agent.hpp"
 #include <cstring>
+#include <cassert>
 
 int main(int argc, char *argv[]) {
     broccoli::ThreadingPolicy policy = broccoli::ALL;
@@ -20,14 +21,17 @@ int main(int argc, char *argv[]) {
     MyEnvironment* env = new MyEnvironment();
     context.add_environment(env);
     std::vector<DummyWazabi*> agents;
+
     for (int i = 0; i < nb_agents; ++i)
     {
         agents.push_back(new DummyWazabi(*env, rand() % 100000));
-        context.add_agent(agents[agents.size() - 1]);
+        context.add_agent(agents.back());
     }
-    for (int i = 0; i < 100; ++i)
+    int nbtick = 100;
+    for (int i = 0; i < nbtick; ++i)
       context.update();
 
     std::cout << "value : " << env->getValue() << std::endl;
+    assert(env->getValue() == nbtick * nb_agents);
     return 0;
 }

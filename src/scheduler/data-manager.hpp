@@ -8,7 +8,7 @@
 #include <agent/agent.hpp>
 #include <agent/agent.hpp>
 #include <utils/ctpl_stl.h>
-#include <utils/thread_pool.hh>
+#include <utils/thread_pool.hpp>
 #include <map>
 #include "action.hpp"
 #include <cstdint>
@@ -20,12 +20,12 @@ class DataUpdate;
 
   class DataManager {
     public:
-      DataManager() : _threads(new broccoli::thread_pool(std::thread::hardware_concurrency())), _use_threads(true) {}
-      DataManager(bool use_threads) : _use_threads(use_threads)
+      DataManager() : _threads(new broccoli::thread_pool(std::thread::hardware_concurrency(), false)), _use_threads(true) {}
+      DataManager(bool use_threads) : _threads(nullptr), _use_threads(use_threads)
 	  {
 	    if (_use_threads)
 		{
-		  _threads = new broccoli::thread_pool(std::thread::hardware_concurrency());
+		  _threads = new broccoli::thread_pool(std::thread::hardware_concurrency(), false);
 		}
 	  }
       ~DataManager();
