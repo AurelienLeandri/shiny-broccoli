@@ -15,8 +15,10 @@ namespace game {
 
   class  Evil: public broccoli::GridElement, public Drawable, public Updatable {
     public:
-      Evil(broccoli::GridPoint position, sf::Texture &texture, GameGrid &grid);
+      Evil(broccoli::GridPoint position, const sf::Texture *texture, GameGrid &grid);
+      Evil(const Evil &other);
       virtual ~Evil();
+      int fibo(int n);
 
     private:
       void move_normally();

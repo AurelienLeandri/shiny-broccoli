@@ -12,6 +12,7 @@ namespace broccoli {
   class GridElement : public Agent {
     public:
       GridElement(GridPoint position);
+      GridElement(GridElement &other) : Agent(other.get_ticks_between_updates()), _position(other.get_position()) {}
       GridElement(GridPoint position, bool step_enabled);
       virtual ~GridElement();
 
@@ -20,7 +21,7 @@ namespace broccoli {
 
     public:
       const GridPoint &get_position() { return _position; }
-      const GridPoint &set_position() { return _position; }
+      void set_position(GridPoint position) { _position = position; }
 
     public:
       GridPoint _position;
