@@ -18,7 +18,8 @@ namespace game {
 
   class GridTile : public broccoli::GridElement, public Drawable {
     public:
-      GridTile(const broccoli::GridPoint &position, TileType type, sf::Texture &texture);
+      GridTile(const broccoli::GridPoint &position, TileType type, const sf::Texture *texture);
+      GridTile(const GridTile &other);
       virtual ~GridTile();
 
     public:

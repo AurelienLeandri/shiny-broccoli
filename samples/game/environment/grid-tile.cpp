@@ -7,10 +7,11 @@
 
 namespace game {
 
-  GridTile::GridTile(const broccoli::GridPoint &position, TileType type, sf::Texture &texture)
+  GridTile::GridTile(const broccoli::GridPoint &position, TileType type, const sf::Texture *texture)
       : GridElement(position), _type(type)
   {
-    _sprite.setTexture(texture);
+    _texture = texture;
+    _sprite.setTexture(*_texture);
     _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
   }
 
@@ -37,5 +38,8 @@ namespace game {
       default:
         return "default";
     }
+  }
+
+  GridTile::GridTile(const GridTile &other) : GridTile(other._position, other._type, other._texture){
   }
 }

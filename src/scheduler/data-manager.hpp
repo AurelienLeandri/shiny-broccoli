@@ -47,6 +47,9 @@ class DataUpdate;
       void add_action(Action *action);
       std::mutex *get_mutex(uintptr_t data_address);
 
+		public:
+			bool is_threaded() { return _use_threads; }
+
     private:
       ctpl::thread_pool *_threads;
       std::vector<Action *> pending_actions;

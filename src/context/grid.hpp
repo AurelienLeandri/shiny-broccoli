@@ -10,13 +10,23 @@
 
 namespace broccoli {
 
+
   class Grid : public Environment {
+      struct MoveElement
+      {
+        ~MoveElement() {}
+        std::vector<GridElement *> previous;
+        std::vector<GridElement *> next;
+        GridPoint new_position;
+        GridElement *element;
+      };
+
     public:
       Grid(unsigned int rows, unsigned int cols) : _rows(rows), _cols(cols), _grid_elements(rows * cols) {}
       virtual std::vector<GridElement *> &getElementsAt(GridPoint position);
       virtual void addElementAt(GridElement *element, GridPoint position);
       virtual GridElement *removeElement(GridElement *element, GridPoint position);
-      virtual void moveElementTo(GridElement *element, GridPoint from, GridPoint to);
+      virtual void moveElementTo(GridElement *element, GridPoint to);
       virtual bool hasElement(GridElement *element, GridPoint position);
       virtual const std::vector<GridElement *> &getStackAt(GridPoint position);
       virtual void clearStackAt(GridPoint position);

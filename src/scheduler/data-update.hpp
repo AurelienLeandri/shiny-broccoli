@@ -31,10 +31,14 @@ namespace broccoli {
 
   template <typename T1, typename T2>
   void DataUpdate<T1, T2>::execute() {
-    auto *mutex = _data_manager.get_mutex((uintptr_t) &_data);
-    mutex->lock();
-    _operation(_data, _param);
-    mutex->unlock();
+    if (_data_manager.is_threaded()) {
+      auto *mutex = _data_manager.get_mutex((uintptr_t) &_data);
+      mutex->lock();
+      _operation(_data, _param);
+      mutex->unlock();
+    }
+    else
+      _operation(_data, _param);
   }
 
   template <typename T>
@@ -58,10 +62,14 @@ namespace broccoli {
 
   template <typename T>
   void DataUpdate<T>::execute() {
-    auto *mutex = _data_manager.get_mutex((uintptr_t) &_data);
-    mutex->lock();
-    _operation(_data);
-    mutex->unlock();
+    if (_data_manager.is_threaded()) {
+      auto *mutex = _data_manager.get_mutex((uintptr_t) &_data);
+      mutex->lock();
+      _operation(_data);
+      mutex->unlock();
+    }
+    else
+      _operation(_data);
   }
 
 }

@@ -30,7 +30,7 @@ namespace game {
       int tile_nb;
       while ((iss >> tile_nb)) {
         grid._grid_tiles.push_back(GridTile(broccoli::GridPoint(x, y), TileType(tile_nb),
-                                            rm.textures.at(GridTile::getTextureNameForType(TileType(tile_nb)))));
+                                            &rm.textures.at(GridTile::getTextureNameForType(TileType(tile_nb)))));
         x++;
       }
       y++;
@@ -49,8 +49,10 @@ namespace game {
     for (auto &e : _grid_elements) {
       for (broccoli::GridElement *f : e) {
         Drawable *drawable = dynamic_cast<Drawable *>(f);
-        if (drawable)
+        if (drawable) {
+          drawable->set_sprite_position(f->get_position());
           drawable->draw(target_window);
+        }
       }
     }
   }
@@ -62,18 +64,21 @@ namespace game {
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
         sf::Texture &t = rm.textures.at("agent_good");
-        _grid_elements[y * _cols + x].push_back(new Good(broccoli::GridPoint(x, y), t, *this));
-        context.add_agent(_grid_elements[y * _cols + x].back());
+        Good *e = new Good(broccoli::GridPoint(x, y), &t, *this);
+        this->_grid_elements[y * _cols + x].push_back(e);
+        addElementAt(e, broccoli::GridPoint(x, y));
+        context.add_agent(e);
       }
     }
     for (int i = 0; i < NB_EVIL; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
-        sf::Texture &t = rm.textures.at("agent_good");
-        Evil *e = new Evil(broccoli::GridPoint(x, y), t, *this);
-        _grid_elements[y * _cols + x].push_back(new Evil(broccoli::GridPoint(x, y), t, *this));
-        context.add_agent(_grid_elements[y * _cols + x].back());
+        sf::Texture &t = rm.textures.at("agent_evil");
+        Evil *e = new Evil(broccoli::GridPoint(x, y), &t, *this);
+        this->_grid_elements[y * _cols + x].push_back(e);
+        addElementAt(e, broccoli::GridPoint(x, y));
+        context.add_agent(e);
       }
     }
   }
