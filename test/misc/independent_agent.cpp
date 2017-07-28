@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
      broccoli::ThreadingPolicy policy = broccoli::ThreadingPolicy::ALL;
-        broccoli::LockPolicy lock_policy = broccoli::LockPolicy::USE_LOCK;
+        broccoli::LockPolicy lock_policy = broccoli::LockPolicy::LOCK_FREE;
         if (argc >= 2 && !strcmp(argv[1], "DATA_ONLY"))
             policy = broccoli::ThreadingPolicy::DATA_ONLY;
         else if (argc >= 2 && !strcmp(argv[1], "AGENTS_ONLY"))

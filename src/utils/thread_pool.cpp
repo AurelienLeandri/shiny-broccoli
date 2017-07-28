@@ -11,12 +11,9 @@ namespace broccoli
          thread_pool::~thread_pool() {
             // Set running flag to false then notify all threads.
 
-               std::cout << "waiting !\n";
-
                 while(tasks_running_ > 0)
                   continue;
 
-                std::cout << "waited !\n";
                 {
                        std::unique_lock< std::mutex > lock( mutex_ );
                                   running_ = false;

@@ -34,7 +34,7 @@ namespace broccoli
     this->stopped_ = stopped;
     this->running_ = true;
     this->tasks_running_.store(0);
-    
+
      std::cout << "thread pool created with " << size << " threads" << std::endl;
      threads_.resize(size);
      for ( std::size_t i = 0; i < size; ++i )
