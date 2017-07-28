@@ -13,7 +13,9 @@ namespace game {
     GRASS = 0,
     FOREST = 1,
     MOUNTAIN = 2,
-    WATER = 3
+    WATER = 3,
+    ORE = 4,
+    PORTAL = 5
   };
 
   class GridTile : public broccoli::GridElement, public Drawable {

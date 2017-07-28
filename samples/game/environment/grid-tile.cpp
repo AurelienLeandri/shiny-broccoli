@@ -13,6 +13,8 @@ namespace game {
     _texture = texture;
     _sprite.setTexture(*_texture);
     _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
+    _sprite.setScale(sf::Vector2f(TILE_SIZE / _sprite.getTexture()->getSize().x,
+                                  TILE_SIZE / _sprite.getTexture()->getSize().y));
   }
 
   void GridTile::draw(sf::RenderWindow &target_window) {
@@ -35,6 +37,10 @@ namespace game {
         return  "tile_mountain";
       case TileType::WATER:
         return  "tile_water";
+      case TileType::ORE:
+        return  "tile_ore";
+      case TileType::PORTAL:
+        return "tile_portal_good";
       default:
         return "default";
     }

@@ -25,6 +25,8 @@ namespace game {
 
     private:
       GameGrid &_grid;
+      sf::Clock _clock;
+      float _elapsed_time;
 
     public:
       virtual void step() override;

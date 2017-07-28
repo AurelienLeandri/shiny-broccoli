@@ -95,18 +95,13 @@ def main():
         pos = random.randint(0, size)
         paint_round_mountains(2, map, cols, rows, pos, mountains_point_max_size)
     placed = False
-    while True:
+    cn = 25
+    while cn > 0:
         i = random.randint(0, rows)
         j = random.randint(0, cols)
         if map[i][j] == 0:
             map[i][j] = 5
-            break
-    while True:
-        i = random.randint(0, rows)
-        j = random.randint(0, cols)
-        if map[i][j] == 0:
-            map[i][j] = 6
-            break
+            cn -= 1
     print(str(cols) + " " + str(rows))
     print_map(map)
 

@@ -11,9 +11,12 @@ namespace game {
   Good::Good(broccoli::GridPoint position, const sf::Texture *texture, GameGrid &grid)
       : GridElement(position, true), _grid(grid)
   {
+    _elapsed_time = 0;
     _texture = texture;
     _sprite.setTexture(*_texture);
     _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
+    _sprite.setScale(sf::Vector2f(TILE_SIZE / _sprite.getTexture()->getSize().x,
+                                  TILE_SIZE / _sprite.getTexture()->getSize().y));
   }
 
   Good::~Good() {
@@ -27,8 +30,12 @@ namespace game {
   }
 
   void Good::step() {
-    fibo(25);
-    move_normally();
+    _elapsed_time += _clock.getElapsedTime().asSeconds();
+    _clock.restart();
+    if (_elapsed_time > 1) {
+      move_normally();
+      _elapsed_time -= 1;
+    }
   }
 
   void Good::update(float delta) {
