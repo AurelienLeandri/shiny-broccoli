@@ -32,9 +32,10 @@ namespace broccoli {
           , _use_threads(use_threads), _data_manager(data_manager),
           _use_lock(lock_policy == LockPolicy::USE_LOCK)
 	  {
+	    std::cout << "scheduler\n";
 	    if (_use_threads)
 		{
-
+          std::cout << "create thread pool in scheduler\n";
 		  if (_use_lock)
 	          _threads = new broccoli::thread_pool_agent(agents, std::thread::hardware_concurrency());
 		   else

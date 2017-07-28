@@ -32,7 +32,9 @@ namespace game {
   void Good::step() {
     _elapsed_time += _clock.getElapsedTime().asSeconds();
     _clock.restart();
+
     if (_elapsed_time > 1) {
+
       move_normally();
       _elapsed_time -= 1;
     }

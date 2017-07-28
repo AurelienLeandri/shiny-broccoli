@@ -8,7 +8,7 @@
 namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
-      : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::NONE),
+      : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL),
         _rm(rm), _grid(game::GameGrid::load_from_file("big.map", _rm))
   {
     _render_window = render_window;
@@ -79,6 +79,7 @@ namespace game {
     while (g->_render_window->isOpen()) {
       elapsed_time = update_clock.getElapsedTime().asSeconds();
       update_clock.restart();
+
       g->update(elapsed_time);
       g->_view_mutex.lock();
       g->_render_window->clear();

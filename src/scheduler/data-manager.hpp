@@ -12,6 +12,7 @@
 #include <utils/thread_pool_lock_free.hpp>
 #include "threading-policy.hpp"
 #include <map>
+#include <iostream>
 #include "action.hpp"
 #include <cstdint>
 
@@ -41,9 +42,8 @@ class DataUpdate;
     public:
       void poll_requests();
 
-	  template<typename T>
- 	  void add_action(DataUpdate<T, void> *update) {
-
+	  template<typename T1, typename T2>
+ 	  void add_action(DataUpdate<T1, T2> *update) {
           if (_use_threads)
           {
             if (_use_lock)

@@ -97,8 +97,8 @@ def main():
     placed = False
     cn = 25
     while cn > 0:
-        i = random.randint(0, rows)
-        j = random.randint(0, cols)
+        i = random.randint(0, rows - 1)
+        j = random.randint(0, cols - 1)
         if map[i][j] == 0:
             map[i][j] = 5
             cn -= 1

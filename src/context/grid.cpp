@@ -42,6 +42,7 @@ namespace broccoli {
         *element,
         move,
         [] (GridElement &elt, MoveElement *m) {
+
           auto i = std::remove(m->previous.begin(), m->previous.end(), m->element);
           m->previous.erase(i, m->previous.end());
           m->previous.shrink_to_fit();

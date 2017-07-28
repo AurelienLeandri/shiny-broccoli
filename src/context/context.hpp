@@ -17,7 +17,7 @@ namespace broccoli {
 
 
       Context();
-      Context(ThreadingPolicy threading_policy, LockPolicy lock_policy = LockPolicy::LOCK_FREE);
+      Context(ThreadingPolicy threading_policy, LockPolicy lock_policy = LockPolicy::USE_LOCK);
       virtual ~Context();
 
     public:

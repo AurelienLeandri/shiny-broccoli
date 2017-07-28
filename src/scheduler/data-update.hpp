@@ -22,6 +22,8 @@ namespace broccoli {
     public:
       void execute() override;
 
+      uintptr_t get_data_address() { return (uintptr_t) &_data; };
+
     public:
       T1 &_data;
       T2 _param;
