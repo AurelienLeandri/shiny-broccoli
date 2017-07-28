@@ -8,6 +8,9 @@
 #include <agent/agent.hpp>
 #include <agent/agent.hpp>
 #include <utils/ctpl_stl.h>
+#include <utils/thread_pool.hpp>
+#include <utils/thread_pool_lock_free.hpp>
+#include "threading-policy.hpp"
 #include <map>
 #include "action.hpp"
 #include <cstdint>
@@ -19,12 +22,18 @@ class DataUpdate;
 
   class DataManager {
     public:
-      DataManager() : _threads(new ctpl::thread_pool(std::thread::hardware_concurrency())), _use_threads(true) {}
-      DataManager(bool use_threads) : _use_threads(use_threads)
+      DataManager() : _threads_free(new broccoli::thread_pool_lock_free(std::thread::hardware_concurrency(), true)),
+       _use_threads(true), _use_lock(false) {}
+      DataManager(bool use_threads, LockPolicy lock_policy = LockPolicy::LOCK_FREE)
+      : _threads(nullptr) , _threads_free(nullptr),
+       _use_threads(use_threads), _use_lock(lock_policy == LockPolicy::USE_LOCK)
 	  {
 	    if (_use_threads)
 		{
-		  _threads = new ctpl::thread_pool(std::thread::hardware_concurrency());
+		  if (!_use_lock)
+		     _threads_free = new broccoli::thread_pool_lock_free(std::thread::hardware_concurrency(), true);
+		  else
+		     _threads = new broccoli::thread_pool(std::thread::hardware_concurrency(), true);
 		}
 	  }
       ~DataManager();
@@ -34,14 +43,25 @@ class DataUpdate;
 
 	  template<typename T>
  	  void add_action(DataUpdate<T, void> *update) {
-          _mutex_actions.lock();
-		  pending_actions.push_back(update);
-          _mutex_actions.unlock();
-		  if (_mutex_cache.find(update->get_data_address()) == _mutex_cache.end())
+
+          if (_use_threads)
           {
-            _mutex_vector.lock();
+            if (_use_lock)
+		       _threads->push([update]() { update->execute();} );
+            else
+		       _threads_free->push([update]() { update->execute();} );
+
+          _mutex_vector.lock();
+		  if (_mutex_cache.find(update->get_data_address()) == _mutex_cache.end())
 		    _mutex_cache[update->get_data_address()] = new std::mutex();
-            _mutex_vector.unlock();
+
+          _mutex_vector.unlock();
+          }
+          else{
+            pending_actions.push_back(update);
+
+          if (_mutex_cache.find(update->get_data_address()) == _mutex_cache.end())
+          		    _mutex_cache[update->get_data_address()] = new std::mutex();
           }
 	  }
       void add_action(Action *action);
@@ -51,10 +71,12 @@ class DataUpdate;
 			bool is_threaded() { return _use_threads; }
 
     private:
-      ctpl::thread_pool *_threads;
-      std::vector<Action *> pending_actions;
+      broccoli::thread_pool_lock_free *_threads_free = nullptr;
+      broccoli::thread_pool *_threads = nullptr;
+      std::vector<Action*> pending_actions;
       std::map<uintptr_t, std::mutex*> _mutex_cache; // TODO: Remove old mutexes to optimize space
       bool _use_threads;
+      bool _use_lock;
       std::mutex _mutex_vector;
       std::mutex _mutex_actions;
   };

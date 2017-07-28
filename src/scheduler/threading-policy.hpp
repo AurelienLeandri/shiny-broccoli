@@ -7,11 +7,16 @@
 
 namespace broccoli {
 
-  enum ThreadingPolicy {
+  enum class ThreadingPolicy {
     ALL,
     DATA_ONLY,
     AGENTS_ONLY,
     NONE
+  };
+
+  enum class LockPolicy {
+    USE_LOCK,
+    LOCK_FREE
   };
 
 }

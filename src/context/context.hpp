@@ -13,8 +13,11 @@ namespace broccoli {
 
   class Context {
     public:
-      Context() : _scheduler(_agents, _data_manager) {}
-      Context(ThreadingPolicy threading_policy);
+
+
+
+      Context();
+      Context(ThreadingPolicy threading_policy, LockPolicy lock_policy = LockPolicy::LOCK_FREE);
       virtual ~Context();
 
     public:
@@ -25,10 +28,10 @@ namespace broccoli {
       DataManager &get_data_manager();
 
     private:
-      DataManager _data_manager;
-      std::vector<std::pair<unsigned int, Agent *>> _agents;
+      std::shared_ptr<DataManager> _data_manager;
+      std::shared_ptr<std::vector<std::pair<unsigned int, Agent *>>> _agents;
       std::vector<Environment *> _environments;
-      Scheduler _scheduler;
+      std::shared_ptr<Scheduler> _scheduler;
 
   };
 
