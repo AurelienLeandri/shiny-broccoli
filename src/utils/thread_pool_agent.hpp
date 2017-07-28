@@ -10,7 +10,7 @@ namespace broccoli
 
         private:
 
-          std::vector<std::pair<unsigned int, Agent *>> &_agents;
+          std::weak_ptr<std::vector<std::pair<unsigned int, Agent *>>> _agents;
 
           thread_pool_agent(const thread_pool_agent &)= delete;
           thread_pool_agent(thread_pool_agent &&) = delete;
@@ -20,7 +20,7 @@ namespace broccoli
         public:
 
 
-          thread_pool_agent(std::vector<std::pair<unsigned int, Agent *>> &agents, int nThreads);
+          thread_pool_agent(std::shared_ptr<std::vector<std::pair<unsigned int, Agent *>>> agents, int nThreads);
           virtual ~thread_pool_agent() override {}
           void step();
 

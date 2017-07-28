@@ -9,11 +9,22 @@ namespace broccoli {
   void DataManager::poll_requests() {
     if (_use_threads) {
 
-      _threads->resume();
-      while (!_threads->waiting())
-         continue;
+      if (_use_lock)
+      {
+        _threads->resume();
+        while (!_threads->waiting())
+          continue;
 
-      _threads->stop();
+         _threads->stop();
+      }
+      else
+      {
+        _threads_free->resume();
+        while (!_threads_free->waiting())
+             continue;
+
+        _threads_free->stop();
+      }
     }
     else {
       for (unsigned int i = 0; i < pending_actions.size(); ++i)
@@ -25,7 +36,10 @@ namespace broccoli {
   void DataManager::add_action(Action *action) {
   if (_use_threads)
   {
-     _threads->push([action]() { action->execute();} );
+     if (_use_lock)
+        _threads->push([action]() { action->execute();} );
+     else
+        _threads_free->push([action]() { action->execute();} );
   }
   else
   {
@@ -40,6 +54,8 @@ namespace broccoli {
       delete p.second;
     if (_threads)
       delete _threads;
+    if (_threads_free)
+      delete _threads_free;
   }
 
   std::mutex *DataManager::get_mutex(uintptr_t data_address) {

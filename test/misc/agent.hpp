@@ -27,7 +27,7 @@ class DummyMaki : public broccoli::Agent
         DummyMaki(int id) : id(id) {};
         void step() {
          using namespace std::chrono_literals;
-         myValue++;int i = 0; for (int j = 0; j < 500; ++j)
+         myValue++;int i = 0; for (int j = 0; j < 200; ++j)
           {
              i += j *j - sqrt(54 * j);
           }};

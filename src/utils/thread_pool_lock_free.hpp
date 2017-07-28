@@ -5,13 +5,17 @@
 #include <atomic>
 #include <vector>
 #include <memory>
+#include <map>
 #include <exception>
 #include <future>
 #include <mutex>
 #include <queue>
+#include "concurrentqueue.h"
+#include "blockingconcurrentqueue.h"
 
 #pragma once
 
+#define BULK_SIZE 100
 
 namespace broccoli
 {
@@ -21,33 +25,33 @@ namespace broccoli
   ** It has a fixed size and can cache results, using the pointer to the AST 
   ** node as a way of identification
   */
-  class thread_pool
+  class thread_pool_lock_free
   {
     protected:
       /// Tasks to be done 
-      std::queue<std::function<void()> *> tasks_;
-
+      moodycamel::BlockingConcurrentQueue<std::function<void()> *> tasks_;
       /// thread groups
       std::vector<std::thread> threads_;
-      /// mutex for the pool
-      std::mutex mutex_;
+      std::map<std::thread::id, unsigned> tokens_id;
+      std::vector<moodycamel::ConsumerToken> tokens_;
+      std::mutex tokens_mutex;
 
-      std::condition_variable condition_;
+
       std::atomic<bool> running_;
       std::atomic<bool> stopped_;
       std::atomic<int> tasks_running_;  // how many tasks are running
 
     /// @brief Constructor.
     // deleted
-    thread_pool(const thread_pool &)= delete;
-    thread_pool(thread_pool &&) = delete;
-    thread_pool & operator=(const thread_pool &) = delete;
-    thread_pool & operator=(thread_pool &&) = delete;
+    thread_pool_lock_free(const thread_pool_lock_free &)= delete;
+    thread_pool_lock_free(thread_pool_lock_free &&) = delete;
+    thread_pool_lock_free & operator=(const thread_pool_lock_free &) = delete;
+    thread_pool_lock_free & operator=(thread_pool_lock_free &&) = delete;
    public:
 
-        thread_pool(int nThreads, bool stopped = false);
+        thread_pool_lock_free(int nThreads, bool stopped = false);
         // the destructor waits for all the functions in the queue to be finished
-        virtual ~thread_pool();
+        virtual ~thread_pool_lock_free();
 
         // get the number of running threads in the pool
         int size() { return static_cast<int>(this->threads_.size()); }
@@ -75,10 +79,9 @@ namespace broccoli
                   (*pck)();
               });
 
-   std::unique_lock<std::mutex> lock(mutex_);
-   tasks_.push(_f);
+
+   tasks_.enqueue(_f);
    tasks_running_++;
-   condition_.notify_one();
    return pck->get_future();
   }
 
@@ -93,10 +96,9 @@ namespace broccoli
                        (*pck)();
                    });
 
-     std::unique_lock<std::mutex> lock(mutex_);
-     tasks_.push(_f);
+
+     tasks_.enqueue(_f);
      tasks_running_++;
-     condition_.notify_one();
      return pck->get_future();
     }
 

@@ -1,5 +1,5 @@
 #include "thread_pool.hpp"
-
+#include <iostream>
 
 namespace broccoli
 {
@@ -10,19 +10,22 @@ namespace broccoli
         // the destructor waits for all the functions in the queue to be finished
          thread_pool::~thread_pool() {
             // Set running flag to false then notify all threads.
+
+               std::cout << "waiting !\n";
+
+                while(tasks_running_ > 0)
+                  continue;
+
+                std::cout << "waited !\n";
                 {
-                  std::unique_lock< std::mutex > lock( mutex_ );
-                  running_ = false;
-                  condition_.notify_all();
+                       std::unique_lock< std::mutex > lock( mutex_ );
+                                  running_ = false;
+                                  condition_.notify_all();
                 }
 
-                try
-                {
-                  for (std::size_t i = 0; i < threads_.size(); ++i)
+                for (std::size_t i = 0; i < threads_.size(); ++i)
                      threads_[i].join();
-                }
-                // Suppress all exceptions.
-                catch ( const std::exception& ) {}
+
         }
 
 
@@ -30,8 +33,9 @@ namespace broccoli
 
     void  thread_pool::init(bool stopped, unsigned size)
      {
-    this->stopped_ = stopped;
+    this->stopped_.store(stopped);
     this->running_ = true;
+    this->tasks_running_.store(0);
 
      threads_.resize(size);
      for ( std::size_t i = 0; i < size; ++i )

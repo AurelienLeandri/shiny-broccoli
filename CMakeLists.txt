@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(ShinyBroccoli)
 
 # C++14 and extra flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -lpthread -std=c++1y -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -lpthread -std=c++1y -O3")
 
 # Sets library output directory
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
