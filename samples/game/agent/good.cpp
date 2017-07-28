@@ -32,12 +32,11 @@ namespace game {
   void Good::step() {
     _elapsed_time += _clock.getElapsedTime().asSeconds();
     _clock.restart();
-
-    if (_elapsed_time > 1) {
+    fibo(30);
 
       move_normally();
-      _elapsed_time -= 1;
-    }
+    //  _elapsed_time -= 1;
+
   }
 
   void Good::update(float delta) {
