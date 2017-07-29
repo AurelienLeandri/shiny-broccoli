@@ -12,5 +12,5 @@ add_subdirectory(agent)
 add_subdirectory(environment)
 add_subdirectory(graphics)
 
-add_executable(sample_game ${SAMPLE_GAME_SOURCES})
-target_link_libraries(sample_game broccoli sfml-graphics sfml-window sfml-system -pthread)
+add_executable(sample_game_mt_lock_free ${SAMPLE_GAME_SOURCES})
+target_link_libraries(sample_game_mt_lock_free broccoli sfml-graphics sfml-window sfml-system -pthread)

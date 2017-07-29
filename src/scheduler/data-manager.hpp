@@ -23,7 +23,7 @@ class DataUpdate;
 
   class DataManager {
     public:
-      DataManager() : _threads_free(new broccoli::thread_pool_lock_free(std::thread::hardware_concurrency(), true)),
+      DataManager() : _threads_free(new broccoli::thread_pool_lock_free(1, true)),
        _use_threads(true), _use_lock(false) {}
       DataManager(bool use_threads, LockPolicy lock_policy = LockPolicy::LOCK_FREE)
       : _threads(nullptr) , _threads_free(nullptr),
@@ -32,9 +32,9 @@ class DataUpdate;
 	    if (_use_threads)
 		{
 		  if (!_use_lock)
-		     _threads_free = new broccoli::thread_pool_lock_free(std::thread::hardware_concurrency(), true);
+		     _threads_free = new broccoli::thread_pool_lock_free(1, true);
 		  else
-		     _threads = new broccoli::thread_pool(std::thread::hardware_concurrency(), true);
+		     _threads = new broccoli::thread_pool(1, true);
 		}
 	  }
       ~DataManager();

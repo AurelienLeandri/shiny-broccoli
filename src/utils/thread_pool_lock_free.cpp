@@ -13,17 +13,15 @@ namespace broccoli
         // the destructor waits for all the functions in the queue to be finished
          thread_pool_lock_free::~thread_pool_lock_free() {
             // Set running flag to false then notify all threads.
-                 std::cout << "waiting !\n";
 
-                                while(tasks_running_ > 0)
-                                  continue;
+                 while(tasks_running_ > 0)
+                      continue;
 
-                                std::cout << "waited !\n";
+                 running_ = false;
 
-                                                  running_ = false;
-
-                                for (std::size_t i = 0; i < threads_.size(); ++i)
-                                     threads_[i].join();
+                 for (std::size_t i = 0; i < threads_.size(); ++i)
+                    if (threads_[i].joinable())
+                        threads_[i].join();
         }
 
 
@@ -35,7 +33,7 @@ namespace broccoli
     this->running_ = true;
     this->tasks_running_.store(0);
 
-     std::cout << "thread pool created with " << size << " threads" << std::endl;
+
      threads_.resize(size);
      for ( std::size_t i = 0; i < size; ++i )
         {
@@ -71,9 +69,16 @@ namespace broccoli
          // still running.
          std::function< void() >* _task[BULK_SIZE];
          std::size_t size_extracted = 0;
-         while ((stopped_ || (size_extracted = tasks_.wait_dequeue_bulk_timed( _task, BULK_SIZE, 100)) == 0)
+         while (((size_extracted = tasks_.wait_dequeue_bulk_timed( _task, BULK_SIZE, 100)) == 0)
          && running_)
-            continue;
+           {
+             continue;
+           }
+
+           do {
+                continue;
+           } while(stopped_ && running_);
+
          // If pool is no longer running, break out.
          if ( !running_ ) break;
 

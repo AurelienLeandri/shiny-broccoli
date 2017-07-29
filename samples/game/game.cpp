@@ -8,7 +8,7 @@
 namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
-      : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL),
+      : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL, broccoli::LockPolicy::LOCK_FREE),
         _rm(rm), _grid(game::GameGrid::load_from_file("big.map", _rm))
   {
     _render_window = render_window;
@@ -28,7 +28,12 @@ namespace game {
   }
 
   void Game::update(float delta) {
+    sf::Clock update_clock;
+
     context.update();
+    float t =  update_clock.getElapsedTime().asSeconds();
+
+    std::cout << "Tick per seconds: " << (1 / t) << " \r" << std::flush;
   }
 
   void Game::start() {

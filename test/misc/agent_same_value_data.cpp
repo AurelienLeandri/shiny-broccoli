@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
         agents.push_back(new DummyWazabi(*env, rand() % 100000));
         context.add_agent(agents.back());
     }
-    int nbtick = 100;
+    int nbtick = 1000;
     for (int i = 0; i < nbtick; ++i)
       context.update();
 

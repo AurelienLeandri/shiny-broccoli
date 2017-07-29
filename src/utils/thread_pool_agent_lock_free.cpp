@@ -9,14 +9,13 @@ namespace broccoli
           std::shared_ptr<std::vector<std::pair<unsigned int, Agent *>>> agents, int nThreads)
            :  _agents(agents), thread_pool_lock_free(nThreads, true)
           {
-            std::cout << "built !\n";
-
           }
 
           void thread_pool_agent_free::step()
           {
 
 
+            stopped_.store(true);
             auto tmp = _agents.lock();
             auto agents = *tmp;
             for (auto& elt : agents) {
@@ -39,9 +38,10 @@ namespace broccoli
              }
 
 
-
+             stopped_.store(false);
              while(!waiting())
                 continue;
 
+              stopped_.store(true);
           }
 }
