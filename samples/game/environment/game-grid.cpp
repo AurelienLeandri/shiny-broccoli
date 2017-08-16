@@ -25,13 +25,26 @@ namespace game {
     std::getline(infile, line);
     GameGrid grid(rows, cols);
     unsigned int x = 0, y = 0;
-    while (std::getline(infile, line)) {
+    while (y < rows && std::getline(infile, line)) {
       std::istringstream iss(line);
       int tile_nb;
       while ((iss >> tile_nb)) {
         GridTile tile(broccoli::GridPoint(x, y), TileType(tile_nb),
-                      &rm.textures.at(GridTile::getTextureNameForType(TileType(tile_nb))));
+                      &rm.textures.at("base"));
         grid._grid_tiles.push_back(tile);
+        x++;
+      }
+      y++;
+      x = 0;
+    }
+    std::getline(infile, line);
+    x = 0, y = 0;
+    while (std::getline(infile, line)) {
+      std::istringstream iss(line);
+      unsigned int tile_height;
+      while ((iss >> tile_height)) {
+        grid._grid_tiles[y * grid._cols + x].set_height(tile_height);
+        grid._grid_tiles[y * grid._cols + x].elevate(&rm.textures.at("edge"));
         x++;
       }
       y++;
@@ -63,7 +76,7 @@ namespace game {
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
-      if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
+      if (_grid_tiles[y * _cols + x].get_type() != SEA) {
         sf::Texture &t = rm.textures.at("agent_good");
         Good *e = new Good(broccoli::GridPoint(x, y), &t, *this);
         this->_grid_elements[y * _cols + x].push_back(e);
@@ -74,7 +87,7 @@ namespace game {
     for (int i = 0; i < NB_EVIL; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
-      if (_grid_tiles[y * _cols + x].get_type() == GRASS || _grid_tiles[y * _cols + x].get_type() == FOREST) {
+      if (_grid_tiles[y * _cols + x].get_type() != SEA) {
         sf::Texture &t = rm.textures.at("agent_evil");
         Evil *e = new Evil(broccoli::GridPoint(x, y), &t, *this);
         this->_grid_elements[y * _cols + x].push_back(e);

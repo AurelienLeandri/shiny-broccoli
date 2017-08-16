@@ -11,11 +11,10 @@ namespace game {
 
   enum TileType {
     GRASS = 0,
-    FOREST = 1,
-    MOUNTAIN = 2,
-    WATER = 3,
-    ORE = 4,
-    PORTAL = 5
+    SEA = 1,
+    SAND = 2,
+    ROCK = 3,
+    SNOW = 4,
   };
 
   class GridTile : public broccoli::GridElement, public Drawable {
@@ -30,14 +29,19 @@ namespace game {
 
     public:
       const TileType &get_type() const { return _type; }
+      void set_height(unsigned int height) { _height = height; }
+      void elevate(sf::Texture *height_texture);
+      const sf::Vector2f get_middle() const { return _middle; };
 
 
     private:
       TileType _type;
+      unsigned int _height;
+      sf::Sprite _edge_sprite;
+      sf::Vector2f _middle;
 
-    public:
-      static std::string getTextureNameForType(TileType type);
-
+    private:
+      static sf::Color get_color_from_type(TileType type);
   };
 
 }

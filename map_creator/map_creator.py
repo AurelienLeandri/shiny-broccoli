@@ -3,6 +3,7 @@
 import sys
 import random
 import queue
+from math import sin
 
 from termcolor import colored
 
@@ -24,6 +25,7 @@ def paint_round(color, map, cols, rows, pos, max_size):
             for j in offsets:
                 if i != j:
                     q.put([x + i, y + j])
+
 
 def paint_round_mountains(color, map, cols, rows, pos, max_size):
     x = pos % cols
@@ -65,6 +67,27 @@ def print_map_colored(map):
     print(s)
 
 
+def compute_heights(map, hmap, rows, cols):
+    for y in range(rows):
+        offset = random.randint(0, 10)
+        for x in range(cols):
+            h = int(sin(float(x / 8) + offset) * 2)
+            if h > 0 and map[y][x] != 1:
+                hmap[y][x] = h
+    for x in range(cols):
+        offset = random.randint(0, 10)
+        for y in range(rows):
+            h = int(sin(float(y / 8) + offset) * 2)
+            if h > 0 and map[y][x] != 1:
+                hmap[y][x] = h
+    size = rows * cols
+    nb_pit_points = size // 6
+    pit_point_max_size = 6
+    for _ in range(nb_pit_points):
+        pos = random.randint(0, size)
+        paint_round(0, hmap, cols, rows, pos, pit_point_max_size)
+
+
 def print_map(map):
     s = ""
     for line in map:
@@ -78,32 +101,29 @@ def main():
     cols = int(sys.argv[1])
     rows = int(sys.argv[2])
     size = cols * rows
-    map = [[3 for _ in range(cols)] for _ in range(rows)]
-    nb_grass_points = size // 3
+    map = [[1 for _ in range(cols)] for _ in range(rows)]
+    nb_grass_points = size // 6
+    nb_sand_points = size // 6
+    nb_rock_points = size // 6
+    nb_snow_points = size // 6
     grass_point_max_size = 6
+    for _ in range(nb_sand_points):
+        pos = random.randint(0, size)
+        paint_round(2, map, cols, rows, pos, grass_point_max_size)
+    for _ in range(nb_rock_points):
+        pos = random.randint(0, size)
+        paint_round(3, map, cols, rows, pos, grass_point_max_size)
+    for _ in range(nb_snow_points):
+        pos = random.randint(0, size)
+        paint_round(4, map, cols, rows, pos, grass_point_max_size)
     for _ in range(nb_grass_points):
         pos = random.randint(0, size)
         paint_round(0, map, cols, rows, pos, grass_point_max_size)
-    nb_forest_points = size // 24
-    forest_point_max_size = 4
-    for _ in range(nb_forest_points):
-        pos = random.randint(0, size)
-        paint_round(1, map, cols, rows, pos, forest_point_max_size)
-    nb_mountains_points = size // 28
-    mountains_point_max_size = 6
-    for _ in range(nb_mountains_points):
-        pos = random.randint(0, size)
-        paint_round_mountains(2, map, cols, rows, pos, mountains_point_max_size)
-    placed = False
-    cn = 25
-    while cn > 0:
-        i = random.randint(0, rows - 1)
-        j = random.randint(0, cols - 1)
-        if map[i][j] == 0:
-            map[i][j] = 5
-            cn -= 1
+    hmap = [[0 if map[j][i] == 1 else 2 if map[j][i] == 3 else 1 for i in range(cols)] for j in range(rows)]
+    compute_heights(map, hmap, rows, cols)
     print(str(cols) + " " + str(rows))
     print_map(map)
+    print_map(hmap)
 
 
 if __name__ == "__main__":

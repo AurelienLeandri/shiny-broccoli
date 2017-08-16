@@ -9,7 +9,7 @@ namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
       : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL, broccoli::LockPolicy::LOCK_FREE),
-        _rm(rm), _grid(game::GameGrid::load_from_file("big.map", _rm))
+        _rm(rm), _grid(game::GameGrid::load_from_file("new.map", _rm))
   {
     _render_window = render_window;
     _render_window->setView(_view);
@@ -33,7 +33,6 @@ namespace game {
     context.update();
     float t =  update_clock.getElapsedTime().asSeconds();
 
-    std::cout << "Tick per seconds: " << (1 / t) << " \r" << std::flush;
   }
 
   void Game::start() {
@@ -46,7 +45,7 @@ namespace game {
               if (event.type == sf::Event::Closed)
                 _render_window->close();
               if (event.type == sf::Event::KeyPressed) {
-                int offsetx = 0, offsety = 0, val = 5;
+                int offsetx = 0, offsety = 0, val = 15;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                   offsetx = -val;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))

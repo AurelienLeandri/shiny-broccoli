@@ -14,9 +14,9 @@ namespace game {
     _elapsed_time = 0;
     _texture = texture;
     _sprite.setTexture(*_texture);
-    _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
-    _sprite.setScale(sf::Vector2f(TILE_SIZE / _sprite.getTexture()->getSize().x,
-                                  TILE_SIZE / _sprite.getTexture()->getSize().y));
+    _sprite.setPosition(sf::Vector2f(position._x * TILE_WIDTH, position._y * TILE_WIDTH));
+    _sprite.setScale(sf::Vector2f(TILE_WIDTH / _sprite.getTexture()->getSize().x,
+                                  TILE_WIDTH / _sprite.getTexture()->getSize().y));
   }
 
   Good::~Good() {
@@ -50,9 +50,7 @@ namespace game {
     while (_position._x + offset_x[move] >= _grid.get_cols()
            || _position._y + offset_y[move] >= _grid.get_rows()
            || _grid._grid_tiles[(_position._y + offset_y[move]) * _grid.get_cols()
-                                + _position._x + offset_x[move]].get_type() == MOUNTAIN
-           || _grid._grid_tiles[(_position._y + offset_y[move]) * _grid.get_cols()
-                                + _position._x + offset_x[move]].get_type() == WATER)
+                                + _position._x + offset_x[move]].get_type() == SEA)
       move = (move + 1) % 5;
     broccoli::GridPoint new_pos(_position._x + offset_x[move], _position._y + offset_y[move]);
     _grid.moveElementTo(this, new_pos);
