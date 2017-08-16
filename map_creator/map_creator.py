@@ -69,24 +69,25 @@ def print_map_colored(map):
 
 def compute_heights(map, hmap, rows, cols):
     for y in range(rows):
-        offset = random.randint(0, 10)
+        offset = float(random.randint(0, 10) * 0.1)
         for x in range(cols):
-            h = int(sin(float(x / 8) + offset) * 2)
+            h = int(sin(float(x / 4) + offset) * 5)
             if h > 0 and map[y][x] != 1:
                 hmap[y][x] = h
     for x in range(cols):
-        offset = random.randint(0, 10)
+        offset = float(random.randint(0, 10) * 0.1)
         for y in range(rows):
-            h = int(sin(float(y / 8) + offset) * 2)
+            h = int(sin(float(y / 4) + offset) * 5)
             if h > 0 and map[y][x] != 1:
                 hmap[y][x] = h
+    """
     size = rows * cols
     nb_pit_points = size // 6
     pit_point_max_size = 6
     for _ in range(nb_pit_points):
         pos = random.randint(0, size)
         paint_round(0, hmap, cols, rows, pos, pit_point_max_size)
-
+    """
 
 def print_map(map):
     s = ""
@@ -119,8 +120,14 @@ def main():
     for _ in range(nb_grass_points):
         pos = random.randint(0, size)
         paint_round(0, map, cols, rows, pos, grass_point_max_size)
-    hmap = [[0 if map[j][i] == 1 else 2 if map[j][i] == 3 else 1 for i in range(cols)] for j in range(rows)]
+    hmap = [[0 for _ in range(cols)] for _ in range(rows)]
     compute_heights(map, hmap, rows, cols)
+    for y in range(rows):
+        for x in range(cols):
+            if map[y][x] != 1 and hmap[y][x] == 0:
+                hmap[y][x] = 1
+            if map[y][x] == 3 and hmap[y][x] < 2:
+                hmap[y][x] = 2
     print(str(cols) + " " + str(rows))
     print_map(map)
     print_map(hmap)

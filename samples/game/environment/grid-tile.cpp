@@ -28,7 +28,7 @@ namespace game {
       _edge_sprite.setTexture(*height_texture);
       float w = _edge_sprite.getTexture()->getSize().x;
       float new_scale = TILE_WIDTH / w;
-      _edge_sprite.setScale(sf::Vector2f(new_scale, new_scale));
+      _edge_sprite.setScale(sf::Vector2f(new_scale, new_scale * 2));
       _edge_sprite.setColor(get_color_from_type(_type));
       _sprite.move(sf::Vector2f(0, -EDGE_HEIGHT * _height));
       _edge_sprite.setPosition(sf::Vector2f(_sprite.getPosition().x, _sprite.getPosition().y + TILE_WIDTH / 4));
@@ -41,7 +41,9 @@ namespace game {
     target_window.draw(_edge_sprite);
     target_window.draw(_sprite);
     sf::CircleShape shape(5);
-    shape.setFillColor(sf::Color(255, 0, 0));
+    if (_height == 0)
+      shape.setFillColor(sf::Color(0, 255, 0));
+    else shape.setFillColor(sf::Color(255, 0, 0));
     shape.setPosition(_middle - sf::Vector2f(2.5, 2.5));
     target_window.draw(shape);
   }
