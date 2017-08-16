@@ -27,6 +27,28 @@ def paint_round(color, map, cols, rows, pos, max_size):
                     q.put([x + i, y + j])
 
 
+def paint_round_sappling(map, omap, cols, rows, pos, max_size):
+    x = pos % cols
+    y = pos // cols
+    offsets = [-1, 0, 1]
+    q = queue.Queue()
+    q.put([x, y])
+    size = random.randint(0, max_size)
+    nb_to_paint = sum([pow(4, i) for i in range(size)])
+    while nb_to_paint > 0:
+        t = q.get()
+        if t[1] < rows and t[0] < cols:
+            if map[t[1]][t[0]] == 0:
+                omap[t[1]][t[0]] = 1
+            elif map[t[1]][t[0]] == 4:
+                omap[t[1]][t[0]] = 2
+        nb_to_paint -= 1
+        for i in offsets:
+            for j in offsets:
+                if i != j:
+                    q.put([x + i, y + j])
+
+
 def paint_round_mountains(color, map, cols, rows, pos, max_size):
     x = pos % cols
     y = pos // cols
@@ -128,9 +150,16 @@ def main():
                 hmap[y][x] = 1
             if map[y][x] == 3 and hmap[y][x] < 2:
                 hmap[y][x] = 2
+    omap = [[0 for _ in range(cols)] for _ in range(rows)]
+    nb_sappling_points = size // 8
+    sappling_point_max_size = 4
+    for _ in range(nb_sappling_points):
+        pos = random.randint(0, size)
+        paint_round_sappling(map, omap, cols, rows, pos, sappling_point_max_size)
     print(str(cols) + " " + str(rows))
     print_map(map)
     print_map(hmap)
+    print_map(omap)
 
 
 if __name__ == "__main__":

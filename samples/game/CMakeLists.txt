@@ -3,7 +3,7 @@ set(SAMPLE_GAME_SOURCES ${SAMPLE_GAME_SOURCES}
         main.cpp
         resources-manager.cpp resources-manager.hpp
         game.cpp game.hpp
-        constants.hpp)
+        constants.hpp environment/collectible.cpp environment/collectible.hpp environment/Tree.cpp environment/Tree.hpp)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 find_package(SFML)

@@ -9,7 +9,7 @@ namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
       : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL, broccoli::LockPolicy::LOCK_FREE),
-        _rm(rm), _grid(game::GameGrid::load_from_file("new.map", _rm))
+        _rm(rm), _grid(game::GameGrid::load_from_file("onew.map", _rm))
   {
     _render_window = render_window;
     _render_window->setView(_view);

@@ -25,6 +25,7 @@ namespace game {
 
     public:
       void draw(sf::RenderWindow &target_window);
+      void draw(sf::RenderWindow &target_window, bool draw_edge);
       virtual void step() override;
 
     public:

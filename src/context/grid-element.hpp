@@ -20,7 +20,7 @@ namespace broccoli {
       virtual void step() = 0;
 
     public:
-      const GridPoint &get_position() { return _position; }
+      const GridPoint &get_position() const { return _position; }
       void set_position(GridPoint position) { _position = position; }
 
     public:

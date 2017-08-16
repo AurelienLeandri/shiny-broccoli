@@ -3,6 +3,8 @@
 //
 
 #include "game-grid.hpp"
+#include "collectible.hpp"
+#include "Tree.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -39,12 +41,31 @@ namespace game {
     }
     std::getline(infile, line);
     x = 0, y = 0;
-    while (std::getline(infile, line)) {
+    while (y < rows && std::getline(infile, line)) {
       std::istringstream iss(line);
       unsigned int tile_height;
       while ((iss >> tile_height)) {
         grid._grid_tiles[y * grid._cols + x].set_height(tile_height);
         grid._grid_tiles[y * grid._cols + x].elevate(&rm.textures.at("edge"));
+        x++;
+      }
+      y++;
+      x = 0;
+    }
+    std::getline(infile, line);
+    x = 0, y = 0;
+    while (y < rows && std::getline(infile, line)) {
+      std::istringstream iss(line);
+      unsigned int object_id;
+      while ((iss >> object_id)) {
+        if (object_id == 1) {
+          grid._grid_elements[y * grid._cols + x].push_back(
+              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling")));
+        }
+        else if (object_id == 2) {
+          grid._grid_elements[y * grid._cols + x].push_back(
+              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling_snow")));
+        }
         x++;
       }
       y++;
@@ -58,14 +79,14 @@ namespace game {
   }
 
   void GameGrid::draw(sf::RenderWindow &target_window) {
-    for (auto &e : _grid_tiles)
-      e.draw(target_window);
-    for (auto &e : _grid_elements) {
-      for (broccoli::GridElement *f : e) {
-        Drawable *drawable = dynamic_cast<Drawable *>(f);
-        if (drawable) {
-          drawable->set_sprite_position(f->get_position()._x, f->get_position()._y);
-          drawable->draw(target_window);
+    for (unsigned int y = 0; y < _rows; y++) {
+      for (unsigned int x = 0; x < _cols; x++) {
+        _grid_tiles[y * _cols + x].draw(target_window, (x != _cols - 1 && y != _rows - 1));
+        for (broccoli::GridElement *f : _grid_elements[y * _cols + x]) {
+          Drawable *drawable = dynamic_cast<Drawable *>(f);
+          if (drawable) {
+            drawable->draw(target_window);
+          }
         }
       }
     }
