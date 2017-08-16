@@ -20,8 +20,8 @@ namespace game {
       const sf::Texture *_texture;
 
     public:
-      void set_sprite_position(broccoli::GridPoint position) { _sprite.setPosition(position._x * TILE_SIZE, position._y * game::TILE_SIZE); }
       const sf::Sprite &get_sprite() const { return _sprite; }
+      void set_sprite_position(float x, float y) { _sprite.setPosition(x, y); }
       const sf::Texture *get_texture() const { return _texture; }
   };
 

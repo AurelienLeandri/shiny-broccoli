@@ -3,6 +3,7 @@
 //
 
 #include <game/constants.hpp>
+#include <iostream>
 #include "grid-tile.hpp"
 
 namespace game {
@@ -12,9 +13,13 @@ namespace game {
   {
     _texture = texture;
     _sprite.setTexture(*_texture);
-    _sprite.setPosition(sf::Vector2f(position._x * TILE_SIZE, position._y * TILE_SIZE));
+    float x_offset = -((float) position._y) * (TILE_SIZE / 2);
+    float y_offset = position._x * (TILE_SIZE / 4);
+    float x = x_offset + position._x * (TILE_SIZE / 2);
+    float y = y_offset + position._y * (TILE_SIZE / 4);
+    _sprite.setPosition(sf::Vector2f(x, y));
     _sprite.setScale(sf::Vector2f(TILE_SIZE / _sprite.getTexture()->getSize().x,
-                                  TILE_SIZE / _sprite.getTexture()->getSize().y));
+                                  TILE_SIZE / 2 / _sprite.getTexture()->getSize().y));
   }
 
   void GridTile::draw(sf::RenderWindow &target_window) {
@@ -28,6 +33,8 @@ namespace game {
   }
 
   std::string GridTile::getTextureNameForType(TileType type) {
+    return "base";
+    /*
     switch (type) {
       case TileType::GRASS:
         return "tile_grass";
@@ -44,6 +51,7 @@ namespace game {
       default:
         return "default";
     }
+    */
   }
 
   GridTile::GridTile(const GridTile &other) : GridTile(other._position, other._type, other._texture){

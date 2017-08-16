@@ -6,9 +6,9 @@
 #define SHINYBROCCOLI_CONSTANTS_HPP
 
 namespace game {
-  const float TILE_SIZE = 16;
-  const int NB_EVIL = 100;
-  const int NB_GOOD = 100;
+  const float TILE_SIZE = 128;
+  const int NB_EVIL = 0;
+  const int NB_GOOD = 0;
 }
 
 #endif //SHINYBROCCOLI_CONSTANTS_HPP

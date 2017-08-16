@@ -29,8 +29,9 @@ namespace game {
       std::istringstream iss(line);
       int tile_nb;
       while ((iss >> tile_nb)) {
-        grid._grid_tiles.push_back(GridTile(broccoli::GridPoint(x, y), TileType(tile_nb),
-                                            &rm.textures.at(GridTile::getTextureNameForType(TileType(tile_nb)))));
+        GridTile tile(broccoli::GridPoint(x, y), TileType(tile_nb),
+                      &rm.textures.at(GridTile::getTextureNameForType(TileType(tile_nb))));
+        grid._grid_tiles.push_back(tile);
         x++;
       }
       y++;
@@ -50,7 +51,7 @@ namespace game {
       for (broccoli::GridElement *f : e) {
         Drawable *drawable = dynamic_cast<Drawable *>(f);
         if (drawable) {
-          drawable->set_sprite_position(f->get_position());
+          drawable->set_sprite_position(f->get_position()._x, f->get_position()._y);
           drawable->draw(target_window);
         }
       }
