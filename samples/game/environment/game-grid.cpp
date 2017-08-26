@@ -4,7 +4,8 @@
 
 #include "game-grid.hpp"
 #include "collectible.hpp"
-#include "Tree.hpp"
+#include "tree.hpp"
+#include "ore.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -60,11 +61,44 @@ namespace game {
       while ((iss >> object_id)) {
         if (object_id == 1) {
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling")));
+              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling"),
+              &rm.textures.at("shadow")));
         }
         else if (object_id == 2) {
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling_snow")));
+              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling_snow"),
+              &rm.textures.at("shadow")));
+        }
+        else if (object_id == 3) {
+          grid._grid_elements[y * grid._cols + x].push_back(
+              new Ore(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("ore"),
+                       &rm.textures.at("shadow")));
+        }
+        else {
+          int coin = rand() % 5;
+          if (coin == 0) {
+            coin = rand() % 3 + 1;
+            std::stringstream ss;
+            if (grid._grid_tiles[y * grid._cols + x].get_type() == SEA)
+              continue;
+            switch (grid._grid_tiles[y * grid._cols + x].get_type()) {
+              case GRASS:
+                ss << "d_grass_";
+                break;
+              case SAND:
+                ss << "d_sand_";
+                break;
+              case ROCK:
+                ss << "d_rock_";
+                break;
+              case SNOW:
+                ss << "d_snow_";
+                break;
+              case SEA:break;
+            }
+            ss << coin;
+            grid._grid_tiles[y * grid._cols + x].set_decoration(&rm.textures.at(ss.str()));
+          }
         }
         x++;
       }
@@ -98,7 +132,7 @@ namespace game {
       x = rand() % _cols;
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() != SEA) {
-        sf::Texture &t = rm.textures.at("agent_good");
+        sf::Texture &t = rm.textures.at("agent_blue");
         Good *e = new Good(broccoli::GridPoint(x, y), &t, *this);
         this->_grid_elements[y * _cols + x].push_back(e);
         addElementAt(e, broccoli::GridPoint(x, y));

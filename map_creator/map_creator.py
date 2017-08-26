@@ -49,6 +49,25 @@ def paint_round_sappling(map, omap, cols, rows, pos, max_size):
                     q.put([x + i, y + j])
 
 
+def paint_round_ore(map, omap, cols, rows, pos, max_size):
+    x = pos % cols
+    y = pos // cols
+    offsets = [-1, 0, 1]
+    q = queue.Queue()
+    q.put([x, y])
+    size = random.randint(0, max_size)
+    nb_to_paint = sum([pow(4, i) for i in range(size)])
+    while nb_to_paint > 0:
+        t = q.get()
+        if t[1] < rows and t[0] < cols and map[t[1]][t[0]] != 1:
+            omap[t[1]][t[0]] = 3
+        nb_to_paint -= 1
+        for i in offsets:
+            for j in offsets:
+                if i != j:
+                    q.put([x + i, y + j])
+
+
 def paint_round_mountains(color, map, cols, rows, pos, max_size):
     x = pos % cols
     y = pos // cols
@@ -156,6 +175,11 @@ def main():
     for _ in range(nb_sappling_points):
         pos = random.randint(0, size)
         paint_round_sappling(map, omap, cols, rows, pos, sappling_point_max_size)
+    nb_ore_points = size // 16
+    ore_point_max_size = 3
+    for _ in range(nb_ore_points):
+        pos = random.randint(0, size)
+        paint_round_ore(map, omap, cols, rows, pos, ore_point_max_size)
     print(str(cols) + " " + str(rows))
     print_map(map)
     print_map(hmap)

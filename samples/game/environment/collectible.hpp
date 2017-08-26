@@ -14,9 +14,11 @@ namespace game {
 
   class Collectible : public broccoli::GridElement, public Drawable {
     public:
-      Collectible(const GridTile &tile, const sf::Texture *texture);
+      Collectible(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture);
       void step() {}
       void draw(sf::RenderWindow &target_window);
+    protected:
+      sf::Sprite _shadow;
   };
 
 }

@@ -41,6 +41,7 @@ namespace game {
   void GridTile::draw(sf::RenderWindow &target_window) {
     target_window.draw(_edge_sprite);
     target_window.draw(_sprite);
+    target_window.draw(_detail_sprite);
     /*
     sf::CircleShape shape(5);
     if (_height == 0)
@@ -87,6 +88,18 @@ namespace game {
       default:
         return GRASS_COLOR;
     }
+  }
+
+  void GridTile::set_decoration(sf::Texture *detail_texture) {
+    _detail_sprite.setTexture(*detail_texture);
+    float x_offset = -((float) _position._y) * (TILE_WIDTH / 2);
+    float y_offset = _position._x * (TILE_WIDTH / 4);
+    float x = x_offset + _position._x * (TILE_WIDTH / 2);
+    float y = y_offset + _position._y * (TILE_WIDTH / 4);
+    _detail_sprite.setPosition(sf::Vector2f(x, y));
+    _detail_sprite.setScale(sf::Vector2f(TILE_WIDTH / _sprite.getTexture()->getSize().x,
+                                  TILE_WIDTH / 2 / _sprite.getTexture()->getSize().y));
+    _detail_sprite.move(sf::Vector2f(0, -EDGE_HEIGHT * _height));
   }
 
 }

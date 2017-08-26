@@ -32,6 +32,7 @@ namespace game {
       const TileType &get_type() const { return _type; }
       void set_height(unsigned int height) { _height = height; }
       void elevate(sf::Texture *height_texture);
+      void set_decoration(sf::Texture *detail_texture);
       const sf::Vector2f get_middle() const { return _middle; };
 
 
@@ -39,6 +40,7 @@ namespace game {
       TileType _type;
       unsigned int _height;
       sf::Sprite _edge_sprite;
+      sf::Sprite _detail_sprite;
       sf::Vector2f _middle;
 
     private:
