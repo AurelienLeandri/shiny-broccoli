@@ -13,11 +13,11 @@
 
 namespace game {
 
-  class  Good: public broccoli::GridElement, public Drawable, public Updatable {
+  class  Peon: public broccoli::GridElement, public Drawable, public Updatable {
     public:
-      Good(broccoli::GridPoint position, const sf::Texture *texture, GameGrid &grid);
-      Good(const Good &other);
-      virtual ~Good();
+      Peon(GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture, GameGrid &grid);
+      //Peon(const Peon &other) : Peon(other._position, other._texture, other._shadow.getTexture(), other._grid) {}
+      virtual ~Peon();
       int fibo(int n);
 
     private:
@@ -27,10 +27,12 @@ namespace game {
       GameGrid &_grid;
       sf::Clock _clock;
       float _elapsed_time;
+      sf::Sprite _shadow;
 
     public:
       virtual void step() override;
       void update(float delta) override;
+      void draw(sf::RenderWindow &target_window) override;
   };
 
 }

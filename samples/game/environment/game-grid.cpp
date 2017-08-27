@@ -9,10 +9,7 @@
 
 #include <fstream>
 #include <sstream>
-#include <iostream>
-#include <game/constants.hpp>
-#include <game/agent/good.hpp>
-#include <game/agent/evil.hpp>
+#include <game/agent/peon.hpp>
 
 namespace game {
 
@@ -131,20 +128,9 @@ namespace game {
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
-      if (_grid_tiles[y * _cols + x].get_type() != SEA) {
+      if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
         sf::Texture &t = rm.textures.at("agent_blue");
-        Good *e = new Good(broccoli::GridPoint(x, y), &t, *this);
-        this->_grid_elements[y * _cols + x].push_back(e);
-        addElementAt(e, broccoli::GridPoint(x, y));
-        context.add_agent(e);
-      }
-    }
-    for (int i = 0; i < NB_EVIL; i++) {
-      x = rand() % _cols;
-      y = rand() % _rows;
-      if (_grid_tiles[y * _cols + x].get_type() != SEA) {
-        sf::Texture &t = rm.textures.at("agent_evil");
-        Evil *e = new Evil(broccoli::GridPoint(x, y), &t, *this);
+        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &rm.textures.at("shadow"), *this);
         this->_grid_elements[y * _cols + x].push_back(e);
         addElementAt(e, broccoli::GridPoint(x, y));
         context.add_agent(e);
