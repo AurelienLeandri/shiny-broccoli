@@ -4,13 +4,13 @@
 
 #pragma once
 
-#include "collectible.hpp"
+#include "ressource.hpp"
 
 namespace game {
 
-  class Ore : public Collectible {
+  class Ore : public Ressource {
     public:
-      Ore(const GridTile &tile, const sf::Texture *bracken_texture, const sf::Texture *shadow_texture);
+      Ore(const broccoli::GridPoint &position, const sf::Texture *bracken_texture, const sf::Texture *shadow_texture);
       void draw(sf::RenderWindow &target_window);
   };
 

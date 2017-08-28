@@ -5,7 +5,7 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <game/environment/game-grid.hpp>
+#include <game/environment/board.hpp>
 #include <game/graphics/updatable.hpp>
 #include <context/context.hpp>
 #include "resources-manager.hpp"
@@ -28,7 +28,7 @@ namespace game {
       sf::View _view;
       sf::RenderWindow *_render_window;
       ResourcesManager &_rm;
-      GameGrid _grid;
+      Board _grid;
       broccoli::Context context;
       float _time_between_steps;
       float _camera_offset_x;

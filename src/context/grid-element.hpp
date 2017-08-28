@@ -21,7 +21,7 @@ namespace broccoli {
 
     public:
       const GridPoint &get_position() const { return _position; }
-      void set_position(GridPoint position) { _position = position; }
+      virtual void set_position(GridPoint position) { _position = position; }
 
     public:
       GridPoint _position;

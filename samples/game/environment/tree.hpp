@@ -4,13 +4,13 @@
 
 #pragma once
 
-#include "collectible.hpp"
+#include "ressource.hpp"
 
 namespace game {
 
-  class Tree : public Collectible {
+  class Tree : public Ressource {
     public:
-      Tree(const GridTile &tile, const sf::Texture *bracken_texture, const sf::Texture *tree_texture,
+      Tree(const broccoli::GridPoint &position, const sf::Texture *bracken_texture, const sf::Texture *tree_texture,
       const sf::Texture *shadow_texture);
       void draw(sf::RenderWindow &target_window);
 

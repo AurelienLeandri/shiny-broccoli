@@ -9,25 +9,19 @@
 #include <context/grid-element.hpp>
 #include <game/graphics/drawable.hpp>
 #include <game/environment/grid-tile.hpp>
-#include <game/environment/game-grid.hpp>
+#include <game/environment/board.hpp>
+#include "mob.hpp"
 
 namespace game {
 
-  class  Peon: public broccoli::GridElement, public Drawable, public Updatable {
+  class  Peon: public Mob {
     public:
-      Peon(GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture, GameGrid &grid);
+      Peon(broccoli::GridPoint position, const sf::Texture *texture, const sf::Texture *shadow_texture, Board &grid);
       //Peon(const Peon &other) : Peon(other._position, other._texture, other._shadow.getTexture(), other._grid) {}
       virtual ~Peon();
-      int fibo(int n);
 
     private:
-      void move_normally();
-
-    private:
-      GameGrid &_grid;
-      sf::Clock _clock;
-      float _elapsed_time;
-      sf::Sprite _shadow;
+      Board &_grid;
 
     public:
       virtual void step() override;

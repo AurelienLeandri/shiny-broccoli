@@ -2,8 +2,8 @@
 // Created by leo on 7/17/17.
 //
 
-#include "game-grid.hpp"
-#include "collectible.hpp"
+#include "board.hpp"
+#include "ressource.hpp"
 #include "tree.hpp"
 #include "ore.hpp"
 
@@ -13,17 +13,17 @@
 
 namespace game {
 
-  game::GameGrid::GameGrid(unsigned int rows, unsigned int cols) : Grid(rows, cols) {
+  game::Board::Board(unsigned int rows, unsigned int cols) : Grid(rows, cols) {
   }
 
-  GameGrid game::GameGrid::load_from_file(const char *file, ResourcesManager &rm) {
+  Board game::Board::load_from_file(const char *file, ResourcesManager &rm) {
     std::ifstream infile(file);
     std::string line;
     unsigned int cols, rows;
     infile >> cols;
     infile >> rows;
     std::getline(infile, line);
-    GameGrid grid(rows, cols);
+    Board grid(rows, cols);
     unsigned int x = 0, y = 0;
     while (y < rows && std::getline(infile, line)) {
       std::istringstream iss(line);
@@ -57,19 +57,25 @@ namespace game {
       unsigned int object_id;
       while ((iss >> object_id)) {
         if (object_id == 1) {
+          /*
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling"),
+              new Tree(broccoli::GridPoint(x, y), &rm.textures.at("bracken"), &rm.textures.at("sappling"),
               &rm.textures.at("shadow")));
+              */
         }
         else if (object_id == 2) {
+          /*
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Tree(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling_snow"),
+              new Tree(broccoli::GridPoint(x, y), &rm.textures.at("bracken"), &rm.textures.at("sappling_snow"),
               &rm.textures.at("shadow")));
+              */
         }
         else if (object_id == 3) {
+          /*
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Ore(grid._grid_tiles[y * grid._cols + x], &rm.textures.at("ore"),
+              new Ore(broccoli::GridPoint(x, y), &rm.textures.at("ore"),
                        &rm.textures.at("shadow")));
+                       */
         }
         else {
           int coin = rand() % 5;
@@ -105,11 +111,11 @@ namespace game {
     return grid;
   }
 
-  const game::GridTile &game::GameGrid::get_tile(int x, int y) {
+  const game::GridTile &game::Board::get_tile(int x, int y) {
     return _grid_tiles[y * _cols + x];
   }
 
-  void GameGrid::draw(sf::RenderWindow &target_window) {
+  void Board::draw(sf::RenderWindow &target_window) {
     for (unsigned int y = 0; y < _rows; y++) {
       for (unsigned int x = 0; x < _cols; x++) {
         _grid_tiles[y * _cols + x].draw(target_window, (x != _cols - 1 && y != _rows - 1));
@@ -123,14 +129,14 @@ namespace game {
     }
   }
 
-  void GameGrid::load_agents(ResourcesManager &rm, broccoli::Context &context) {
+  void Board::load_agents(ResourcesManager &rm, broccoli::Context &context) {
     unsigned int x, y;
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
         sf::Texture &t = rm.textures.at("agent_blue");
-        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &rm.textures.at("shadow"), *this);
+        Peon *e = new Peon(broccoli::GridPoint(x, y), &t, &rm.textures.at("shadow"), *this);
         this->_grid_elements[y * _cols + x].push_back(e);
         addElementAt(e, broccoli::GridPoint(x, y));
         context.add_agent(e);

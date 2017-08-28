@@ -11,9 +11,9 @@
 
 namespace game {
 
-  class GameGrid : public broccoli::Grid, public Drawable {
+  class Board : public broccoli::Grid, public Drawable {
     public:
-      GameGrid(unsigned int rows, unsigned int cols);
+      Board(unsigned int rows, unsigned int cols);
 
     public:
       virtual void draw(sf::RenderWindow &target_window) override;
@@ -21,7 +21,7 @@ namespace game {
       void load_agents(ResourcesManager &rm, broccoli::Context &context);
 
     public:
-      static GameGrid load_from_file(const char *file, ResourcesManager &rm);
+      static Board load_from_file(const char *file, ResourcesManager &rm);
 
     public:
       std::vector<GridTile> _grid_tiles;

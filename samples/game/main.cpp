@@ -1,4 +1,4 @@
-#include <game/environment/game-grid.hpp>
+#include <game/environment/board.hpp>
 #include "game.hpp"
 
 int main() {

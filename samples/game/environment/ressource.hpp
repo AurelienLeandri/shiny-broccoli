@@ -9,16 +9,15 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <game/graphics/drawable.hpp>
 #include "grid-tile.hpp"
+#include "board-element.hpp"
 
 namespace game {
 
-  class Collectible : public broccoli::GridElement, public Drawable {
+  class Ressource : public BoardElement {
     public:
-      Collectible(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture);
+      Ressource(const broccoli::GridPoint &position, const sf::Texture *texture, const sf::Texture *shadow_texture);
       void step() {}
       void draw(sf::RenderWindow &target_window);
-    protected:
-      sf::Sprite _shadow;
   };
 
 }
