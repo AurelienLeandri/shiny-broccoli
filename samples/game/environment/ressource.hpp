@@ -10,10 +10,11 @@
 #include <game/graphics/drawable.hpp>
 #include "grid-tile.hpp"
 #include "board-element.hpp"
+#include "Imob.hpp"
 
 namespace game {
 
-  class Ressource : public BoardElement {
+  class Ressource : public Imob {
     public:
       Ressource(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture);
       void step() {}

@@ -1,21 +1,13 @@
 //
-// Created by leo on 8/27/17.
+// Created by leo on 8/28/17.
 //
 
-#include "mob.hpp"
+#include "Imob.hpp"
 
 namespace game {
-  Mob::Mob(const GridTile &tile, const sf::Texture *sprite_texture,
-      const sf::Texture *shadow_texture)
-      : BoardElement(tile, sprite_texture, shadow_texture) {
-    recompute_pixels_position();
-  }
 
-  void Mob::move(MoveDirections direction) {
-    recompute_pixels_position();
-  }
-
-  void Mob::recompute_pixels_position() {
+  Imob::Imob(const GridTile &tile, const sf::Texture *sprite_texture, const sf::Texture *shadow_texture) : BoardElement(
+      tile, sprite_texture, shadow_texture) {
     float x_offset = -((float) _position._y) * (TILE_WIDTH / 2);
     float y_offset = _position._x * (TILE_WIDTH / 4);
     float x = x_offset + _position._x * (TILE_WIDTH / 2);
@@ -35,6 +27,5 @@ namespace game {
                                   TILE_WIDTH / 2 / _shadow.getTexture()->getSize().y / 1.5f));
     _shadow.move(sf::Vector2f(-w / 2.0f, -h / 2.0f));
   }
-
 
 }

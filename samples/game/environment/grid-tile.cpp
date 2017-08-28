@@ -25,7 +25,6 @@ namespace game {
   }
 
   void GridTile::elevate(sf::Texture *height_texture) {
-    /*
     if (height_texture) {
       _edge_sprite.setTexture(*height_texture);
       float w = _edge_sprite.getTexture()->getSize().x;
@@ -37,7 +36,6 @@ namespace game {
     }
     _middle.x = _sprite.getPosition().x + TILE_WIDTH / 2;
     _middle.y = _sprite.getPosition().y + TILE_WIDTH / 4;
-    */
   }
 
   void GridTile::draw(sf::RenderWindow &target_window) {

@@ -4,7 +4,7 @@ set(SAMPLE_GAME_SOURCES ${SAMPLE_GAME_SOURCES}
         resources-manager.cpp resources-manager.hpp
         game.cpp game.hpp
         constants.hpp
-        )
+        environment/Imob.cpp environment/Imob.hpp)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 find_package(SFML)

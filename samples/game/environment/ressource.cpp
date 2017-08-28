@@ -9,10 +9,7 @@
 namespace game {
 
   game::Ressource::Ressource(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture)
-      : BoardElement(tile, texture, shadow_texture) {
-    _texture = texture;
-    _shadow.setTexture(*shadow_texture);
-    _sprite.setTexture(*_texture);
+      : Imob(tile, texture, shadow_texture) {
   }
 
   void Ressource::draw(sf::RenderWindow &target_window) {

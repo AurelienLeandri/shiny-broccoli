@@ -137,7 +137,7 @@ namespace game {
       if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
         sf::Texture &t = rm.textures.at("agent_blue");
         Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &rm.textures.at("shadow"), *this);
-        this->_grid_elements[y * _cols + x].push_back(e);
+        this->_grid_elements[y * _cols + x].push_back((broccoli::GridElement *&&) e);
         addElementAt(e, broccoli::GridPoint(x, y));
         context.add_agent(e);
       }

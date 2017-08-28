@@ -16,12 +16,8 @@ namespace game {
       BoardElement(const GridTile &tile, const sf::Texture *sprite_texture,
                    const sf::Texture *shadow_texture);
 
-    protected:
-      virtual void recompute_pixels_position();
-
     public:
       const sf::Vector2f &get_pixels_position() { return _pixels_position; }
-      virtual void set_position(broccoli::GridPoint position) override;
       virtual void draw(sf::RenderWindow &target_window) override;
 
     protected:

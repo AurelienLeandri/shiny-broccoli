@@ -14,9 +14,10 @@ namespace game {
 
   class Mob : public BoardElement, public Updatable {
     public:
-      Mob(const GridTile &tile, const sf::Texture *sprite_texture,
-                   const sf::Texture *shadow_texture)
-          : BoardElement(tile, sprite_texture, shadow_texture) {}
+      Mob(const GridTile &tile, const sf::Texture *sprite_texture, const sf::Texture *shadow_texture);
+
+    protected:
+      virtual void recompute_pixels_position();
 
     protected:
       void move(MoveDirections direction);
