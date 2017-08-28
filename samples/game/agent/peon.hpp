@@ -16,7 +16,7 @@ namespace game {
 
   class  Peon: public Mob {
     public:
-      Peon(broccoli::GridPoint position, const sf::Texture *texture, const sf::Texture *shadow_texture, Board &grid);
+      Peon(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture, Board &grid);
       //Peon(const Peon &other) : Peon(other._position, other._texture, other._shadow.getTexture(), other._grid) {}
       virtual ~Peon();
 

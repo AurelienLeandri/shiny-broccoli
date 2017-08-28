@@ -7,12 +7,13 @@
 #include <context/grid-element.hpp>
 #include <SFML/System.hpp>
 #include <game/graphics/drawable.hpp>
+#include "grid-tile.hpp"
 
 namespace game {
 
   class BoardElement : public broccoli::GridElement, public Drawable {
     public:
-      BoardElement(const broccoli::GridPoint &position, const sf::Texture *sprite_texture,
+      BoardElement(const GridTile &tile, const sf::Texture *sprite_texture,
                    const sf::Texture *shadow_texture);
 
     protected:

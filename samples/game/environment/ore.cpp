@@ -6,8 +6,8 @@
 
 namespace game {
 
-  game::Ore::Ore(const broccoli::GridPoint &position, const sf::Texture *bracken_texture, const sf::Texture *shadow_texture)
-      : Ressource(position, bracken_texture, shadow_texture)
+  game::Ore::Ore(const GridTile &tile, const sf::Texture *bracken_texture, const sf::Texture *shadow_texture)
+      : Ressource(tile, bracken_texture, shadow_texture)
   {}
 
   void Ore::draw(sf::RenderWindow &target_window) {

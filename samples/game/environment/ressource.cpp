@@ -8,8 +8,8 @@
 
 namespace game {
 
-  game::Ressource::Ressource(const broccoli::GridPoint &position, const sf::Texture *texture, const sf::Texture *shadow_texture)
-      : BoardElement(position, texture, shadow_texture) {
+  game::Ressource::Ressource(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture)
+      : BoardElement(tile, texture, shadow_texture) {
     _texture = texture;
     _shadow.setTexture(*shadow_texture);
     _sprite.setTexture(*_texture);

@@ -6,9 +6,9 @@
 
 namespace game {
 
-  game::Tree::Tree(const broccoli::GridPoint &position, const sf::Texture *bracken_texture, const sf::Texture *tree_texture,
+  game::Tree::Tree(const GridTile &tile, const sf::Texture *bracken_texture, const sf::Texture *tree_texture,
     const sf::Texture *shadow_texture)
-      : Ressource(position, bracken_texture, shadow_texture)
+      : Ressource(tile, bracken_texture, shadow_texture)
   {
     _sprite.setScale(sf::Vector2f(_sprite.getScale().x / 2, _sprite.getScale().y / 2));
     /*

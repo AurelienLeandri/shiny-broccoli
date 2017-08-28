@@ -33,9 +33,9 @@ namespace game {
     recompute_pixels_position();
   }
 
-  BoardElement::BoardElement(const broccoli::GridPoint &position, const sf::Texture *sprite_texture,
+  BoardElement::BoardElement(const GridTile &tile, const sf::Texture *sprite_texture,
                              const sf::Texture *shadow_texture)
-  : GridElement(position), _shadow_texture(shadow_texture)
+  : GridElement(tile.get_position()), _shadow_texture(shadow_texture)
   {
     _texture = sprite_texture;
     _sprite.setTexture(*_texture);

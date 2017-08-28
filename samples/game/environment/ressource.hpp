@@ -15,7 +15,7 @@ namespace game {
 
   class Ressource : public BoardElement {
     public:
-      Ressource(const broccoli::GridPoint &position, const sf::Texture *texture, const sf::Texture *shadow_texture);
+      Ressource(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture);
       void step() {}
       void draw(sf::RenderWindow &target_window);
   };

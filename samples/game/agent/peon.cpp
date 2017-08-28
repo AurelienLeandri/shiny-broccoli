@@ -8,8 +8,8 @@
 
 namespace game {
 
-  Peon::Peon(broccoli::GridPoint position, const sf::Texture *texture, const sf::Texture *shadow_texture, Board &grid)
-      : Mob(position, texture, shadow_texture), _grid(grid)
+  Peon::Peon(const GridTile &tile, const sf::Texture *texture, const sf::Texture *shadow_texture, Board &grid)
+      : Mob(tile, texture, shadow_texture), _grid(grid)
   {
     //std::cout << "Positions : x=" << tile._x << ", y=" << tile._y << std::endl;
     /*

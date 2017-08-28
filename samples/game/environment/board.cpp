@@ -59,21 +59,21 @@ namespace game {
         if (object_id == 1) {
           /*
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Tree(broccoli::GridPoint(x, y), &rm.textures.at("bracken"), &rm.textures.at("sappling"),
+              new Tree(_grid_tiles[y * _cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling"),
               &rm.textures.at("shadow")));
               */
         }
         else if (object_id == 2) {
           /*
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Tree(broccoli::GridPoint(x, y), &rm.textures.at("bracken"), &rm.textures.at("sappling_snow"),
+              new Tree(_grid_tiles[y * _cols + x], &rm.textures.at("bracken"), &rm.textures.at("sappling_snow"),
               &rm.textures.at("shadow")));
               */
         }
         else if (object_id == 3) {
           /*
           grid._grid_elements[y * grid._cols + x].push_back(
-              new Ore(broccoli::GridPoint(x, y), &rm.textures.at("ore"),
+              new Ore(_grid_tiles[y * _cols + x], &rm.textures.at("ore"),
                        &rm.textures.at("shadow")));
                        */
         }
@@ -136,7 +136,7 @@ namespace game {
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
         sf::Texture &t = rm.textures.at("agent_blue");
-        Peon *e = new Peon(broccoli::GridPoint(x, y), &t, &rm.textures.at("shadow"), *this);
+        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &rm.textures.at("shadow"), *this);
         this->_grid_elements[y * _cols + x].push_back(e);
         addElementAt(e, broccoli::GridPoint(x, y));
         context.add_agent(e);
