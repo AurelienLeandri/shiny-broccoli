@@ -20,9 +20,6 @@ namespace game {
       //Peon(const Peon &other) : Peon(other._position, other._texture, other._shadow.getTexture(), other._grid) {}
       virtual ~Peon();
 
-    private:
-      Board &_grid;
-
     public:
       virtual void step() override;
       void update(float delta) override;
