@@ -36,6 +36,7 @@ namespace broccoli {
   void DataManager::add_action(Action *action) {
   if (_use_threads)
   {
+    std::cout << "add_action called" << std::endl;
      if (_use_lock)
         _threads->push([action]() { action->execute();} );
      else

@@ -7,12 +7,32 @@
 namespace game {
   Mob::Mob(const GridTile &tile, const sf::Texture *sprite_texture,
       const sf::Texture *shadow_texture, Board &grid)
-      : BoardElement(tile, sprite_texture, shadow_texture), _grid(grid) {
+      : BoardElement(tile, sprite_texture, shadow_texture, true), _grid(grid) {
     recompute_pixels_position();
   }
 
   void Mob::move(MoveDirections direction) {
-    recompute_pixels_position();
+    int new_x = _position._x;
+    int new_y = _position._y;
+    switch (direction) {
+      case UP:
+        new_y -= 1;
+        break;
+      case LEFT:
+        new_x -= 1;
+        break;
+      case DOWN:
+        new_y += 1;
+        break;
+      case RIGHT:
+        new_x += 1;
+        break;
+    }
+
+    if (new_x >= 0 && (unsigned int) new_x < _grid.get_cols() && new_y >= 0 && (unsigned int) new_y < _grid.get_rows()
+        && _grid._grid_tiles[new_y * _grid.get_cols() + new_x].get_type() != SEA
+        && !_grid.get_grid_elements()[new_y * _grid.get_cols() + new_x].size())
+      _grid.moveElementTo(this, broccoli::GridPoint((unsigned int) new_x, (unsigned int) new_y));
   }
 
   void Mob::recompute_pixels_position() {
@@ -29,6 +49,10 @@ namespace game {
     w = _shadow_texture->getSize().x * _shadow.getScale().x;
     h = _shadow_texture->getSize().y * _shadow.getScale().y;
     _shadow.move(sf::Vector2f(-w / 2.0f, -h / 2.0f));
+  }
+
+  void Mob::update(float delta) {
+    recompute_pixels_position();
   }
 
 

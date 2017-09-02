@@ -138,4 +138,17 @@ namespace game {
     }
   }
 
+  void Board::update(float delta) {
+    for (unsigned int y = 0; y < _rows; y++) {
+      for (unsigned int x = 0; x < _cols; x++) {
+        for (broccoli::GridElement *f : _grid_elements[y * _cols + x]) {
+          Updatable *updatable = dynamic_cast<Updatable *>(f);
+          if (updatable) {
+            updatable->update(delta);
+          }
+        }
+      }
+    }
+  }
+
 }

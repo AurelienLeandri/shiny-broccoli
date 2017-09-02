@@ -22,7 +22,6 @@ namespace game {
 
     public:
       virtual void step() override;
-      void update(float delta) override;
       void draw(sf::RenderWindow &target_window) override;
   };
 

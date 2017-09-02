@@ -42,14 +42,6 @@ namespace game {
     target_window.draw(_edge_sprite);
     target_window.draw(_sprite);
     target_window.draw(_detail_sprite);
-    /*
-    sf::CircleShape shape(5);
-    if (_height == 0)
-      shape.setFillColor(sf::Color(0, 255, 0));
-    else shape.setFillColor(sf::Color(255, 0, 0));
-    shape.setPosition(_middle - sf::Vector2f(2.5, 2.5));
-    target_window.draw(shape);
-     */
   }
 
   void GridTile::draw(sf::RenderWindow &target_window, bool draw_edge) {

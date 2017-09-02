@@ -15,8 +15,8 @@ namespace broccoli {
       struct MoveElement
       {
         ~MoveElement() {}
-        std::vector<GridElement *> previous;
-        std::vector<GridElement *> next;
+        std::vector<GridElement *> *previous;
+        std::vector<GridElement *> *next;
         GridPoint new_position;
         GridElement *element;
       };

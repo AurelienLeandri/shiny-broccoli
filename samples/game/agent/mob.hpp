@@ -19,6 +19,7 @@ namespace game {
 
     protected:
       virtual void recompute_pixels_position();
+      void update(float delta) override;
 
     protected:
       Board &_grid;

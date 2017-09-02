@@ -15,12 +15,12 @@ namespace game {
   Peon::~Peon() {
   }
 
-  void Peon::step() {}
-
-  void Peon::update(float delta) {
+  void Peon::step() {
+    move((MoveDirections)(rand() % 4));
   }
 
   void Peon::draw(sf::RenderWindow &target_window) {
+    recompute_pixels_position();
     target_window.draw(_shadow);
     target_window.draw(_sprite);
   }

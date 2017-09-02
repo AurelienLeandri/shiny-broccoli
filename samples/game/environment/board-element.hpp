@@ -15,6 +15,8 @@ namespace game {
     public:
       BoardElement(const GridTile &tile, const sf::Texture *sprite_texture,
                    const sf::Texture *shadow_texture);
+      BoardElement(const GridTile &tile, const sf::Texture *sprite_texture,
+                                 const sf::Texture *shadow_texture, bool step_enabled);
 
     public:
       const sf::Vector2f &get_pixels_position() { return _pixels_position; }

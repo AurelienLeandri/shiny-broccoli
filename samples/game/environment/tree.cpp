@@ -11,7 +11,6 @@ namespace game {
     const sf::Texture *shadow_texture)
       : Ressource(tile, bracken_texture, shadow_texture)
   {
-    std::cout << tile.get_type() << std::endl;
     _sprite.setScale(sf::Vector2f(TILE_WIDTH / _sprite.getTexture()->getSize().x / 3.0f,
                                   TILE_WIDTH / _sprite.getTexture()->getSize().y / 3.0f));
     _shadow.setScale(sf::Vector2f(TILE_WIDTH / _shadow.getTexture()->getSize().x / 1.5f,

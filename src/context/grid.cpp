@@ -14,19 +14,19 @@ namespace broccoli {
 
   void Grid::addElementAt(GridElement *element, GridPoint position) {
     MoveElement *move = new MoveElement();
-    move->previous = this->_grid_elements[element->get_position()._x, element->get_position()._y];
-    move->next = this->_grid_elements[position._x, position._y];
+    move->previous = &this->_grid_elements[element->get_position()._x, element->get_position()._y];
+    move->next = &this->_grid_elements[position._x, position._y];
     move->new_position = position;
     move->element = element;
     this->modify<GridElement, MoveElement*>(
         *element,
         move,
        [] (GridElement &elt, MoveElement *m) {
-         auto i = std::remove(m->previous.begin(), m->previous.end(), m->element);
-         m->previous.erase(i, m->previous.end());
-         m->previous.shrink_to_fit();
+         auto i = std::remove(m->previous->begin(), m->previous->end(), m->element);
+         m->previous->erase(i, m->previous->end());
+         m->previous->shrink_to_fit();
          m->element->set_position(m->new_position);
-         m->next.push_back(m->element);
+         m->next->push_back(m->element);
          delete m;
         }
     );
@@ -34,8 +34,8 @@ namespace broccoli {
 
   void Grid::moveElementTo(GridElement *element, GridPoint position) {
     MoveElement *move = new MoveElement();
-    move->previous = this->_grid_elements[element->get_position()._y * _cols + element->get_position()._x];
-    move->next = this->_grid_elements[position._y * _cols + position._x];
+    move->previous = &this->_grid_elements[element->get_position()._y * _cols + element->get_position()._x];
+    move->next = &this->_grid_elements[position._y * _cols + position._x];
     move->new_position = position;
     move->element = element;
     this->modify<GridElement, MoveElement*>(
@@ -43,11 +43,11 @@ namespace broccoli {
         move,
         [] (GridElement &elt, MoveElement *m) {
 
-          auto i = std::remove(m->previous.begin(), m->previous.end(), m->element);
-          m->previous.erase(i, m->previous.end());
-          m->previous.shrink_to_fit();
+          auto i = std::remove(m->previous->begin(), m->previous->end(), m->element);
+          m->previous->erase(i, m->previous->end());
+          m->previous->shrink_to_fit();
           m->element->set_position(m->new_position);
-          m->next.push_back(m->element);
+          m->next->push_back(m->element);
           delete m;
         }
     );

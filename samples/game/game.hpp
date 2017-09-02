@@ -19,7 +19,8 @@ namespace game {
 
     public:
       virtual void draw(sf::RenderWindow &target_window) override;
-      virtual void update(float delta) override;
+      void update_agents(float delta);
+      virtual void update(float delta) override ;
 
     public:
       void start();
