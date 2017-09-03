@@ -8,12 +8,12 @@ namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
       : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL),
-        _rm(rm), _grid(game::Board::load_from_file("base.map", _rm))
+        _rm(rm), _grid(game::Board::load_from_file("base.map", _rm, context))
   {
     _render_window = render_window;
     _render_window->setView(_view);
     _grid.set_data_manager(&context.get_data_manager());
-    _grid.load_agents(_rm, context);
+    _grid.load_agents();
     _time_between_steps = 0.25;
   }
 

@@ -30,7 +30,6 @@ namespace broccoli
 
   void  thread_pool::init(bool stopped, unsigned size)
   {
-    std::cout << "initializing" << std::endl;
     this->stopped_.store(stopped);
     this->running_ = true;
     this->tasks_running_.store(0);
@@ -88,7 +87,6 @@ namespace broccoli
       } catch ( const std::exception& ) {} // Delete all exceptions
 
       tasks_running_--;
-      std::cout << std::endl;
 
 
       // Task has finished, so increment count of available threads.

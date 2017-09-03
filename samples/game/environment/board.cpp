@@ -10,20 +10,22 @@
 #include <fstream>
 #include <sstream>
 #include <game/agent/peon.hpp>
+#include <game/agent/portal.hpp>
 
 namespace game {
 
-  game::Board::Board(unsigned int rows, unsigned int cols) : Grid(rows, cols) {
-  }
+  game::Board::Board(unsigned int rows, unsigned int cols, ResourcesManager &rm, broccoli::Context &context)
+      : Grid(rows, cols), _rm(rm), _context(context)
+  {}
 
-  Board game::Board::load_from_file(const char *file, ResourcesManager &rm) {
+  Board game::Board::load_from_file(const char *file, ResourcesManager &rm, broccoli::Context &context) {
     std::ifstream infile(file);
     std::string line;
     unsigned int cols, rows;
     infile >> cols;
     infile >> rows;
     std::getline(infile, line);
-    Board grid(rows, cols);
+    Board grid(rows, cols, rm, context);
     unsigned int x = 0, y = 0;
     while (y < rows && std::getline(infile, line)) {
       std::istringstream iss(line);
@@ -123,19 +125,24 @@ namespace game {
     }
   }
 
-  void Board::load_agents(ResourcesManager &rm, broccoli::Context &context) {
+  void Board::load_agents() {
     unsigned int x, y;
     for (int i = 0; i < NB_GOOD; i++) {
       x = rand() % _cols;
       y = rand() % _rows;
       if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
-        sf::Texture &t = rm.textures.at("agent_blue");
-        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &rm.textures.at("shadow"), *this);
-        this->_grid_elements[y * _cols + x].push_back(e);
+        sf::Texture &t = _rm.textures.at("agent_blue");
+        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &_rm.textures.at("shadow"), *this);
+        this->_grid_elements[y * _cols + x].push_back(std::move(e));
         addElementAt(e, broccoli::GridPoint(x, y));
-        context.add_agent(e);
+        _context.add_agent(e);
       }
     }
+    Portal *portal = new Portal(_grid_tiles[6 * _cols + 5], &_rm.textures.at("portal"),
+                                &_rm.textures.at("shadow"), *this);
+    this->_grid_elements[6 * _cols + 5].push_back(std::move(portal));
+    addElementAt(portal, broccoli::GridPoint(5, 6));
+    _context.add_agent(portal);
   }
 
   void Board::update(float delta) {

@@ -9,9 +9,7 @@ namespace broccoli
 
    thread_pool_agent::thread_pool_agent(std::shared_ptr<std::vector<std::pair<unsigned int, Agent *>>> agents, int nThreads)
            :  _agents(agents), thread_pool(nThreads, true)
-          {
-            std::cout << "constructing thread_pool agent" << std::endl;
-          }
+          {}
 
    void thread_pool_agent::step()
           {
