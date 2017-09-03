@@ -17,10 +17,7 @@ namespace broccoli {
 
   void Scheduler::tick() {
     if (_use_threads) {
-       if (_use_lock)
-          _threads->step();
-        else
-          _threads_free->step();
+      _threads->step();
     }
     else {
       for (auto& elt : *_agents) {

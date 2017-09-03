@@ -14,9 +14,7 @@ namespace game {
     _render_window->setView(_view);
     _grid.set_data_manager(&context.get_data_manager());
     _grid.load_agents(_rm, context);
-    _time_between_steps = 1;
-    // context.get_data_manager().poll_requests();
-    // context.update();
+    _time_between_steps = 0.25;
   }
 
   Game::~Game() {

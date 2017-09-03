@@ -9,6 +9,7 @@
 #include <future>
 #include <mutex>
 #include <queue>
+#include <iostream>
 
 #pragma once
 
@@ -51,7 +52,10 @@ namespace broccoli
 
         // get the number of running threads in the pool
         int size() { return static_cast<int>(this->threads_.size()); }
-        bool waiting() { return tasks_running_ == 0; }
+        bool waiting() {
+          // std::cout << tasks_running_ << std::endl;
+          return tasks_running_ == 0;
+        }
         std::thread & get_thread(int i) { return this->threads_[i]; }
 
         // empty the queue
