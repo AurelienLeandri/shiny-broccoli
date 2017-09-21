@@ -20,6 +20,7 @@ namespace game {
     protected:
       virtual void recompute_pixels_position();
       void update(float delta) override;
+      bool is_move_valid(int pos_x, int pos_y);
 
     protected:
       Board &_grid;

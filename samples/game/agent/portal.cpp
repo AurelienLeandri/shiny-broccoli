@@ -29,6 +29,7 @@ namespace game {
   }
 
   void Portal::step() {
+    /* FIXME: create agents
       if (_counter >= _counter_max) {
           _counter -= _counter_max;
         _counter_max *= 2;
@@ -42,6 +43,7 @@ namespace game {
       }
       else
           _counter++;
+    */
   }
 
   void Portal::compute_spawn_positions() {

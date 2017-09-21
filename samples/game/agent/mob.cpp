@@ -3,11 +3,12 @@
 //
 
 #include "mob.hpp"
+#include "peon.hpp"
 
 namespace game {
   Mob::Mob(const GridTile &tile, const sf::Texture *sprite_texture,
       const sf::Texture *shadow_texture, Board &grid)
-      : BoardElement(tile, sprite_texture, shadow_texture, true), _grid(grid) {
+      : BoardElement(tile, sprite_texture, shadow_texture, false), _grid(grid) {
     recompute_pixels_position();
   }
 
@@ -29,9 +30,7 @@ namespace game {
         break;
     }
 
-    if (new_x >= 0 && (unsigned int) new_x < _grid.get_cols() && new_y >= 0 && (unsigned int) new_y < _grid.get_rows()
-        && _grid._grid_tiles[new_y * _grid.get_cols() + new_x].get_type() != SEA
-        && !_grid.get_grid_elements()[new_y * _grid.get_cols() + new_x].size())
+    if (is_move_valid(new_x, new_y))
       _grid.moveElementTo(this, broccoli::GridPoint((unsigned int) new_x, (unsigned int) new_y));
   }
 
@@ -53,6 +52,20 @@ namespace game {
 
   void Mob::update(float delta) {
     recompute_pixels_position();
+  }
+
+  bool Mob::is_move_valid(int pos_x, int pos_y) {
+    if (pos_x >= 0 && (unsigned int) pos_x < _grid.get_cols()
+        && pos_y >= 0 && (unsigned int) pos_y < _grid.get_rows()
+           && _grid._grid_tiles[pos_y * _grid.get_cols() + pos_x].get_type() != SEA) {
+      for (auto &e : _grid.get_grid_elements()[pos_y * _grid.get_cols() + pos_x]) {
+        Peon *peon = dynamic_cast<Peon *>(e);
+        if (!peon)
+          return false;
+      }
+      return true;
+    }
+    return false;
   }
 
 

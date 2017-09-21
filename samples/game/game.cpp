@@ -7,7 +7,7 @@
 namespace game {
 
   Game::Game(sf::RenderWindow *render_window, ResourcesManager &rm)
-      : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::ALL),
+      : _view(sf::FloatRect(0, 0, 640, 640)), context(broccoli::ThreadingPolicy::NONE),
         _rm(rm), _grid(game::Board::load_from_file("base.map", _rm, context))
   {
     _render_window = render_window;

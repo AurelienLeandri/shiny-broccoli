@@ -27,6 +27,8 @@ namespace broccoli {
             elt.second->step();
             elt.first = elt.second->get_ticks_between_updates();
           }
+          else
+            elt.second->enable_step(true);
         }
       }
     }

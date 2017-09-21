@@ -127,22 +127,24 @@ namespace game {
 
   void Board::load_agents() {
     unsigned int x, y;
-    for (int i = 0; i < NB_GOOD; i++) {
-      x = rand() % _cols;
-      y = rand() % _rows;
-      if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
-        sf::Texture &t = _rm.textures.at("agent_blue");
-        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &_rm.textures.at("shadow"), *this);
-        this->_grid_elements[y * _cols + x].push_back(std::move(e));
-        addElementAt(e, broccoli::GridPoint(x, y));
-        _context.add_agent(e);
-      }
-    }
     Portal *portal = new Portal(_grid_tiles[6 * _cols + 5], &_rm.textures.at("portal"),
                                 &_rm.textures.at("shadow"), *this);
     this->_grid_elements[6 * _cols + 5].push_back(std::move(portal));
     addElementAt(portal, broccoli::GridPoint(5, 6));
     _context.add_agent(portal);
+    for (int i = 0; i < NB_GOOD; i++) {
+      x = 3;
+      y = 4;
+      // x = rand() % _cols;
+      // y = rand() % _rows;
+      if (_grid_tiles[y * _cols + x].get_type() != SEA && !_grid_elements[y * _cols + x].size()) {
+        sf::Texture &t = _rm.textures.at("agent_blue");
+        Peon *e = new Peon(_grid_tiles[y * _cols + x], &t, &_rm.textures.at("shadow"), *this, portal->get_position());
+        this->_grid_elements[y * _cols + x].push_back(std::move(e));
+        addElementAt(e, broccoli::GridPoint(x, y));
+        _context.add_agent(e);
+      }
+    }
   }
 
   void Board::update(float delta) {
