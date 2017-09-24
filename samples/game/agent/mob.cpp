@@ -34,6 +34,12 @@ namespace game {
       _grid.moveElementTo(this, broccoli::GridPoint((unsigned int) new_x, (unsigned int) new_y));
   }
 
+
+  void Mob::move(broccoli::GridPoint position) {
+    if (is_move_valid(position._x, position._y))
+      _grid.moveElementTo(this, position);
+  }
+
   void Mob::recompute_pixels_position() {
     _pixels_position = _grid._grid_tiles[_position._y * _grid.get_cols() + _position._x].get_middle();
     _sprite.setPosition(_pixels_position);

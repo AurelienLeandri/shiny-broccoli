@@ -27,6 +27,7 @@ namespace game {
 
     protected:
       void move(MoveDirections direction);
+      void move(broccoli::GridPoint position);
 
   };
 
